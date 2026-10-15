@@ -6,6 +6,21 @@ Tất cả các thay đổi đáng chú ý của dự án sẽ được ghi nh�
 
 ---
 
+## [1.6.5-doc-ablation-report] - 2026-10-15: Tài Liệu Hóa Báo Cáo Thực Nghiệm Đối Chuẩn Ablation Study (30 Bài Toán)
+- **Tài liệu nghiên cứu ([KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md))**: Tổng hợp toàn diện kết quả thực nghiệm đối chuẩn hoàn tất lúc 14:34 ngày 15/10/2026 trên mô hình `Qwen2.5-Coder-7B` Local; ghi nhận chênh lệch vượt bậc (+76.7% Pass@3), bằng chứng bắt lỗi sửa đề $H_1$, phân tích cơ chế CEGAR, cung cấp mã LaTeX và kịch bản thuyết trình cho Slide 5 buổi báo cáo 18/10.
+
+## [1.6.4-ablation-core30] - 2026-10-15: Bổ Sung Tùy Chọn Đối Chuẩn Ablation 30 Bài Toán Cốt Lõi (Tab 3 & CLI)
+- **Mở rộng phạm vi đối chuẩn ([web_demo/tabs/tab_metrics_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_metrics_view.py), [experiments/run_clover_baseline_comparison.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/experiments/run_clover_baseline_comparison.py))**: Bổ sung tùy chọn **`🏆 Bộ Cốt Lõi Chuẩn Mực (30 bài toán thuật toán)`** vào danh sách preset đối chuẩn bóc tách với Stanford Clover; cho phép chạy so tài trực tiếp trên toàn bộ 30 bài toán chuẩn mực giữa Baseline và Hệ Thống Đề Xuất.
+
+## [1.6.3-dynamic-metrics] - 2026-10-15: Đồng Bộ Động Tab 3 Báo Cáo NCKH Với Kết Quả Chạy Thực Nghiệm Mới Nhất
+- **Tự động đồng bộ số liệu ([web_demo/tabs/tab_metrics_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_metrics_view.py))**: Loại bỏ bảng 16 bài cố định cũ; Tab 3 chuyển sang tự động đọc và phân tích tệp `artifacts/results/last_batch_run.json`.
+- **Trực quan hóa thời gian thực ([web_demo/tabs/tab_metrics_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_metrics_view.py))**: Cập nhật 4 thẻ Metric (29/30 bài đạt 96.7%, tổng thời gian 1925s), biểu đồ so sánh Pass@1 vs Pass@K theo 3 nhóm benchmark và bảng danh mục chi tiết toàn bộ 30 bài toán thuật toán.
+
+## [1.6.2-core30-benchmark] - 2026-10-15: Bổ Sung Tùy Chọn Preset 30 Bài Toán Cốt Lõi (CLI & Web UI)
+- **Đồng bộ Giao diện Web ([app.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/app.py), [web_demo/helpers.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/helpers.py))**: Bổ sung mục chọn nhanh **`🎯 Bộ Cốt Lõi 30 bài (30 bài)`** vào dropdown "Sổ xuống chọn bộ bài toán" trên Sidebar; tự động tick chọn 30 bài toán thuật toán chuẩn mực (Clover, HumanEval, Advanced) và bỏ qua 5 bài quy nạp để phục vụ chạy hàng loạt hoặc chạy đơn.
+- **Cập nhật CLI ([experiments/run_cross_model_benchmark.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/experiments/run_cross_model_benchmark.py))**: Bổ sung tùy chọn `--preset core30` lọc chính xác 30 bài toán chuẩn mực phục vụ thực nghiệm kiểm chứng số liệu NCKH cho buổi báo cáo ngày 18/10.
+- **Khắc phục mã hóa Windows Console ([experiments/run_cross_model_benchmark.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/experiments/run_cross_model_benchmark.py))**: Cấu hình `sys.stdout.reconfigure(encoding='utf-8')` và `sys.stderr.reconfigure(encoding='utf-8')` loại bỏ triệt để lỗi `UnicodeEncodeError: 'charmap' codec can't encode character` trên terminal Windows mặc định (cp1252).
+
 ## [1.6.1-groq-tracker] - 2026-10-09: Bộ Theo Dõi & Thống Kê Token Groq Cloud API (LPU Inference)
 - **Cốt lõi Token Tracker ([core/token_tracker.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/core/token_tracker.py))**: Bổ sung các hàm `get_groq_token_usage()`, `record_groq_tokens()` và `reset_groq_tokens()`; lưu trữ kiên cố số liệu Token Input/Output và số lượt gọi vào `artifacts/results/groq_token_usage.json`.
 - **Tự động trích xuất Token ([agents/llm_agent.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/agents/llm_agent.py))**: Tự động đọc `response.usage` từ phản hồi của LiteLLM khi gọi các mô hình Groq Cloud để cộng dồn chính xác lượng token tiêu thụ.

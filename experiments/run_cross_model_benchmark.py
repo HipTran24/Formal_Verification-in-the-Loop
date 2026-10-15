@@ -8,6 +8,13 @@ Sử dụng:
 
 import os
 import sys
+
+# Cấu hình UTF-8 chuẩn cho console Windows tránh lỗi UnicodeEncodeError
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8')
+
 import argparse
 from pathlib import Path
 # pyrefly: ignore [missing-import]
@@ -48,9 +55,9 @@ def parse_args():
     )
     parser.add_argument(
         "--preset",
-        choices=["sample", "core", "clover", "humaneval", "all"],
+        choices=["sample", "core", "clover", "humaneval", "core30", "all"],
         default="sample",
-        help="Tập bài toán: sample (5 bài tiêu biểu), core (16 bài mục tiêu), clover (6 bài), humaneval (10 bài), all (30 bài toàn bộ)"
+        help="Tập bài toán: sample (5 bài tiêu biểu), core (16 bài mục tiêu), clover (6 bài), humaneval (10 bài), core30 (30 bài chuẩn mực), all (35 bài toàn bộ)"
     )
     parser.add_argument(
         "--max-attempts",
@@ -96,6 +103,8 @@ def main():
         target_keys = [k for k, v in registry.items() if v["group"] == "HumanEval"]
     elif args.preset == "core":
         target_keys = [k for k, v in registry.items() if v["is_target"]]
+    elif args.preset == "core30":
+        target_keys = [k for k, v in registry.items() if v["group"] != "Inductive"]
     else:
         target_keys = list(registry.keys())
 

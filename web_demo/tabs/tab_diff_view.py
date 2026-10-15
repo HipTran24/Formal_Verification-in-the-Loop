@@ -54,3 +54,4 @@ def render_diff_tab() -> None:
             st.info("Bài toán đã đạt chứng minh ngay tại Lượt 1 hoặc chưa có vòng lặp tự sửa để so sánh diff.")
     else:
         st.info("Vui lòng thực hiện một lượt chạy kiểm định tại Tab 1 để xem phân tích so sánh mã nguồn.")
+

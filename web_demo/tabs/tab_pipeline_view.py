@@ -25,12 +25,17 @@ from web_demo.helpers import (
     clear_last_batch_run,
     clear_last_single_run,
     dict_to_pipeline_result,
+    load_last_batch_details,
     load_last_batch_run,
     load_last_single_run,
     load_task_spec,
+    load_ui_state,
     save_last_batch_run,
     save_last_single_run,
+    save_ui_state,
 )
+
+
 
 
 def render_pipeline_tab(
@@ -136,7 +141,7 @@ def render_pipeline_tab(
                     st.markdown(
                         f"""
                         <div class="status-card-pass">
-                            🏆 THÀNH CÔNG: Z3 SMT Solver đã chứng minh toán học tính đúng đắn 100%!
+                            🏆 XÁC MINH THÀNH CÔNG: Mã nguồn đã được Dafny & Z3 Solver chứng minh theo đặc tả!
                             <br><small>Thời gian thực thi: {elapsed:.2f}s | Đạt chứng nhận tại Lượt {res.total_iterations}/{max_k}</small>
                         </div>
                         """,
@@ -223,7 +228,7 @@ def render_pipeline_tab(
                     st.markdown(
                         f"""
                         <div class="status-card-pass">
-                            🏆 THÀNH CÔNG (DỮ LIỆU ĐÃ LƯU): Z3 SMT Solver đã chứng minh toán học tính đúng đắn 100%!
+                            🏆 XÁC MINH THÀNH CÔNG (DỮ LIỆU ĐÃ LƯU): Mã nguồn đã được Dafny & Z3 Solver chứng minh theo đặc tả!
                             <br><small>Thời gian thực thi: {saved_meta.get('elapsed', 0)}s | Đạt chứng nhận tại Lượt {saved_res.total_iterations}/{saved_meta.get('max_k', max_k)}</small>
                         </div>
                         """,
@@ -246,22 +251,45 @@ def render_pipeline_tab(
                     icon = "✅" if entry.is_verified else "❌"
                     status_text = "Đã Chứng Minh (Verified)" if entry.is_verified else f"Vi Phạm: {entry.error_taxonomy}"
 
-                    with st.expander(f"Lượt {entry.iteration}: {icon} {status_text}", expanded=True):
+                    with st.expander(f"Lượt {entry.iteration}: {icon} {status_text}", expanded=False):
                         col_code, col_diag = st.columns([1.2, 1])
 
                         with col_code:
-                            st.markdown("**Mã nguồn thuật toán:**")
+                            st.markdown("<div style='font-size: 0.78rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;'>MÃ NGUỒN THUẬT TOÁN:</div>", unsafe_allow_html=True)
                             st.code(entry.code, language="dafny")
 
                         with col_diag:
-                            st.markdown("**Phản hồi từ Z3 Solver & Bộ Chẩn Đoán:**")
+                            st.markdown("<div style='font-size: 0.78rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;'>PHẢN HỒI Z3 SOLVER & BỘ CHẨN ĐOÁN:</div>", unsafe_allow_html=True)
                             if entry.is_verified:
-                                st.success("✨ Z3 đã thẩm định thành công tất cả Verification Conditions (VCs). Không có ảo giác!")
+                                st.markdown(
+                                    """
+                                    <div style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 6px; padding: 10px 12px; color: #86efac; font-size: 0.79rem; line-height: 1.5; text-align: justify;">
+                                        ✨ <strong>Z3 SMT Solver:</strong> Đã thẩm định thành công tất cả Verification Conditions (VCs). Không có ảo giác!
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True,
+                                )
                             else:
-                                st.error(f"**Lỗi phát hiện:** `{entry.error_taxonomy}`")
-                                st.markdown(f"**Chi tiết:** {entry.error_message}")
+                                st.markdown(
+                                    f"""
+                                    <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(248, 113, 113, 0.3); border-radius: 6px; padding: 6px 10px; color: #fca5a5; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px;">
+                                        Lỗi phát hiện: <span style="font-family: monospace; color: #f87171;">{entry.error_taxonomy}</span>
+                                    </div>
+                                    <div class="diag-box-text" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(248, 113, 113, 0.2); border-radius: 6px; padding: 10px 12px; color: #cbd5e1; font-size: 0.79rem; line-height: 1.5; text-align: justify; margin-bottom: 6px;">
+                                        <strong style="color: #f87171;">Chi tiết:</strong> {entry.error_message}
+                                    </div>
+                                    """,
+                                    unsafe_allow_html=True,
+                                )
                                 if getattr(entry, "counterexample_desc", None):
-                                    st.warning(f"🎯 **Phản ví dụ Z3 (CEGAR):** `{entry.counterexample_desc}`")
+                                    st.markdown(
+                                        f"""
+                                        <div class="diag-box-text" style="background: rgba(113, 63, 18, 0.25); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 6px; padding: 8px 12px; color: #fde047; font-size: 0.78rem; line-height: 1.45; text-align: justify;">
+                                            🎯 <strong>Phản ví dụ Z3 (CEGAR):</strong> <code>{entry.counterexample_desc}</code>
+                                        </div>
+                                        """,
+                                        unsafe_allow_html=True,
+                                    )
 
                         if getattr(entry, "cot_trace", None):
                             cot_tok = getattr(entry, "cot_tokens", 0)
@@ -329,7 +357,7 @@ def render_pipeline_tab(
             with st.expander(f"📑 Danh mục chi tiết {len(selected_batch)} bài toán đã chọn", expanded=False):
                 for idx_item, item_key in enumerate(selected_batch, 1):
                     item_info = flat_registry[item_key]
-                    target_badge = "🔥 [100% Target]" if item_info["is_target"] else "🧪 [Extended]"
+                    target_badge = "🎯 [Core Target]" if item_info["is_target"] else "🧪 [Extended]"
                     st.markdown(f"**{idx_item}.** `{item_info['short_name']}` ({item_info['group']}) — {target_badge} — *{item_info['rel_path']}*")
 
             col_b_run, col_b_stop = st.columns([4, 2])
@@ -366,6 +394,12 @@ def render_pipeline_tab(
                     saved_batch = load_last_batch_run()
                     if saved_batch and saved_batch.get("results_list"):
                         st.session_state["last_batch_results"] = saved_batch["results_list"]
+
+                # Tự động nạp chi tiết các lượt chạy 1 2 3 đã lưu từ đĩa nếu session_state chưa có
+                if "batch_history_dict" not in st.session_state or not st.session_state["batch_history_dict"]:
+                    loaded_details = load_last_batch_details()
+                    if loaded_details:
+                        st.session_state["batch_history_dict"] = loaded_details
 
                 if "last_batch_results" in st.session_state:
                     if saved_batch:
@@ -453,13 +487,14 @@ def render_pipeline_tab(
                     st.session_state["last_batch_results"] = results_list
                     st.session_state["batch_history_dict"] = batch_history_dict
 
-                    # Lưu kiên cố đợt chạy hàng loạt vào artifacts/results/last_batch_run.json
+                    # Lưu kiên cố đợt chạy hàng loạt vào artifacts/results/last_batch_run.json và last_batch_details.json
                     save_last_batch_run(
                         results_list=results_list,
                         total_batch_time=total_batch_time,
                         model_name=model_name,
                         max_k=max_k,
                         timeout_sec=timeout_sec,
+                        batch_history_dict=batch_history_dict,
                     )
 
                     # Đếm số lượng pass
@@ -470,7 +505,7 @@ def render_pipeline_tab(
                         st.markdown(
                             f"""
                             <div class="status-card-pass">
-                                🏆 HOÀN THÀNH XUẤT SẮC: {passed_count}/{total_tasks} bài toán đã được Z3 Solver chứng minh 100%!
+                                🏆 HOÀN THÀNH TOÀN BỘ: {passed_count}/{total_tasks} bài toán đã được Dafny & Z3 xác minh theo đặc tả!
                                 <br><small>Tổng thời gian thực thi: {total_batch_time:.2f}s | Tỷ lệ thành công: 100.0%</small>
                             </div>
                             """,
@@ -490,42 +525,181 @@ def render_pipeline_tab(
                 except Exception as e:
                     st.error(f"Đã xảy ra lỗi trong quá trình chạy hàng loạt: {str(e)}")
 
-            # Cho phép chọn xem chi tiết 1 bài trong số các bài đã chạy
-            if "batch_history_dict" in st.session_state and st.session_state["batch_history_dict"]:
-                b_history = st.session_state["batch_history_dict"]
+            # Hiển thị trực tiếp lịch sử các lượt chạy 1, 2, 3 của từng bài toán trong danh sách hàng loạt
+            has_history = "batch_history_dict" in st.session_state and bool(st.session_state["batch_history_dict"])
+            has_results_list = "last_batch_results" in st.session_state and bool(st.session_state["last_batch_results"])
+
+            if has_history or has_results_list:
                 st.markdown("---")
-                st.markdown("### 🔍 Soi Chi Tiết Từng Bài Trong Đợt Chạy Vừa Rồi")
+                st.markdown("### 📋 Lịch Sử Các Lượt Kiểm Định & Tự Sửa Lỗi Của Từng Bài Toán")
 
-                chosen_detail = st.selectbox("Chọn bài toán cần phân tích sâu:", list(b_history.keys()))
+                if has_results_list:
+                    r_map = {r["Bài Toán"]: r for r in st.session_state["last_batch_results"]}
+                    task_keys_list = list(r_map.keys())
+                    saved_batch_task = load_ui_state().get("batch_task")
+                    default_idx = task_keys_list.index(saved_batch_task) if saved_batch_task in task_keys_list else 0
+
+                    chosen_detail = st.selectbox(
+                        "Chọn một bài toán trong danh sách để xem chi tiết tiến trình tự sửa lỗi (Lượt 1, 2, 3):",
+                        task_keys_list,
+                        index=default_idx,
+                        format_func=lambda x: f"[{r_map[x].get('Tập Benchmark', '')}] {x} — {r_map[x].get('Kết Quả Z3', '')} ({r_map[x].get('Lượt Hội Tụ', '')} | {r_map[x].get('Thời Gian (s)', '')}s)",
+                        key="batch_detail_selector",
+                    )
+                    if chosen_detail and chosen_detail != saved_batch_task:
+                        save_ui_state({"batch_task": chosen_detail})
+                else:
+                    b_history = st.session_state["batch_history_dict"]
+                    b_keys = list(b_history.keys())
+                    saved_batch_task = load_ui_state().get("batch_task")
+                    default_idx = b_keys.index(saved_batch_task) if saved_batch_task in b_keys else 0
+
+                    chosen_detail = st.selectbox(
+                        "Chọn một bài toán trong danh sách để xem chi tiết tiến trình tự sửa lỗi (Lượt 1, 2, 3):",
+                        b_keys,
+                        index=default_idx,
+                        key="batch_detail_selector",
+                    )
+                    if chosen_detail and chosen_detail != saved_batch_task:
+                        save_ui_state({"batch_task": chosen_detail})
+
                 if chosen_detail:
-                    detail_data = b_history[chosen_detail]
-                    detail_res: PipelineResult = detail_data["result"]
-                    detail_spec: str = detail_data["spec"]
+                    # Nếu bài toán đã có chi tiết PipelineResult trong bộ nhớ
+                    if has_history and chosen_detail in st.session_state["batch_history_dict"]:
+                        detail_data = st.session_state["batch_history_dict"][chosen_detail]
+                        detail_res: PipelineResult = detail_data["result"]
+                        detail_spec: str = detail_data["spec"]
 
-                    # Đồng bộ sang session state để Tab 2 (Code Diff) dùng được ngay
-                    st.session_state["last_result"] = detail_res
-                    st.session_state["spec_content"] = detail_spec
+                        st.session_state["last_result"] = detail_res
+                        st.session_state["spec_content"] = detail_spec
 
-                    st.caption(f"Đang hiển thị lịch sử sửa lỗi của bài: **{chosen_detail}** (Chuyển sang Tab 2 để xem Code Diff).")
+                        # Hiển thị thẻ trạng thái chung cuộc y như Chế độ Đơn
+                        if detail_res.is_success:
+                            st.markdown(
+                                f"""
+                                <div class="status-card-pass">
+                                    🏆 XÁC MINH THÀNH CÔNG: Mã nguồn đã được Dafny & Z3 Solver chứng minh theo đặc tả!
+                                    <br><small>Đạt chứng nhận tại Lượt {detail_res.total_iterations}/{max_k}</small>
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
+                        else:
+                            st.markdown(
+                                f"""
+                                <div class="status-card-fail">
+                                    ❌ THẤT BẠI: Không thể hội tụ chứng minh sau {detail_res.total_iterations} vòng lặp.
+                                    <br><small>Lý do: {detail_res.failure_reason}</small>
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
 
-                    for entry in detail_res.history:
-                        icon = "✅" if entry.is_verified else "❌"
-                        status_text = "Đã Chứng Minh (Verified)" if entry.is_verified else f"Vi Phạm: {entry.error_taxonomy}"
+                        # Hiển thị từng lượt 1, 2, 3 với mã nguồn và phản hồi Z3 y như Chế độ Đơn
+                        for entry in detail_res.history:
+                            icon = "✅" if entry.is_verified else "❌"
+                            status_text = "Đã Chứng Minh (Verified)" if entry.is_verified else f"Vi Phạm: {entry.error_taxonomy}"
 
-                        with st.expander(f"Lượt {entry.iteration}: {icon} {status_text}", expanded=True):
-                            col_code, col_diag = st.columns([1.2, 1])
+                            with st.expander(f"Lượt {entry.iteration}: {icon} {status_text}", expanded=False):
+                                col_code, col_diag = st.columns([1.2, 1])
 
-                            with col_code:
-                                st.markdown("**Mã nguồn thuật toán:**")
-                                st.code(entry.code, language="dafny")
+                                with col_code:
+                                    st.markdown("<div style='font-size: 0.78rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;'>MÃ NGUỒN THUẬT TOÁN:</div>", unsafe_allow_html=True)
+                                    st.code(entry.code, language="dafny")
 
-                            with col_diag:
-                                st.markdown("**Phản hồi từ Z3 Solver & Bộ Chẩn Đoán:**")
-                                if entry.is_verified:
-                                    st.success("✨ Z3 đã thẩm định thành công tất cả Verification Conditions (VCs). Không có ảo giác!")
-                                else:
-                                    st.error(f"**Lỗi phát hiện:** `{entry.error_taxonomy}`")
-                                    st.markdown(f"**Chi tiết:** {entry.error_message}")
+                                with col_diag:
+                                    st.markdown("<div style='font-size: 0.78rem; font-weight: 700; color: #94a3b8; margin-bottom: 4px;'>PHẢN HỒI Z3 SOLVER & BỘ CHẨN ĐOÁN:</div>", unsafe_allow_html=True)
+                                    if entry.is_verified:
+                                        st.markdown(
+                                            """
+                                            <div style="background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(74, 222, 128, 0.3); border-radius: 6px; padding: 10px 12px; color: #86efac; font-size: 0.79rem; line-height: 1.5; text-align: justify;">
+                                                ✨ <strong>Z3 SMT Solver:</strong> Đã thẩm định thành công tất cả Verification Conditions (VCs). Không có ảo giác!
+                                            </div>
+                                            """,
+                                            unsafe_allow_html=True,
+                                        )
+                                    else:
+                                        st.markdown(
+                                            f"""
+                                            <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(248, 113, 113, 0.3); border-radius: 6px; padding: 6px 10px; color: #fca5a5; font-size: 0.78rem; font-weight: 600; margin-bottom: 6px;">
+                                                Lỗi phát hiện: <span style="font-family: monospace; color: #f87171;">{entry.error_taxonomy}</span>
+                                            </div>
+                                            <div class="diag-box-text" style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(248, 113, 113, 0.2); border-radius: 6px; padding: 10px 12px; color: #cbd5e1; font-size: 0.79rem; line-height: 1.5; text-align: justify; margin-bottom: 6px;">
+                                                <strong style="color: #f87171;">Chi tiết:</strong> {entry.error_message}
+                                            </div>
+                                            """,
+                                            unsafe_allow_html=True,
+                                        )
+                                        if getattr(entry, "counterexample_desc", None):
+                                            st.markdown(
+                                                f"""
+                                                <div class="diag-box-text" style="background: rgba(113, 63, 18, 0.25); border: 1px solid rgba(234, 179, 8, 0.35); border-radius: 6px; padding: 8px 12px; color: #fde047; font-size: 0.78rem; line-height: 1.45; text-align: justify;">
+                                                    🎯 <strong>Phản ví dụ Z3 (CEGAR):</strong> <code>{entry.counterexample_desc}</code>
+                                                </div>
+                                                """,
+                                                unsafe_allow_html=True,
+                                            )
+
+                                if getattr(entry, "cot_trace", None):
+                                    cot_tok = getattr(entry, "cot_tokens", 0)
+                                    with st.expander(f"🧠 Chuỗi Suy Luận CoT Lượt {entry.iteration} ({cot_tok:,} tokens)", expanded=False):
+                                        st.caption("Nội dung mô hình tự suy luận bên trong thẻ `<think>` trước khi sinh mã:")
+                                        st.text_area(
+                                            label=f"cot_view_batch_{chosen_detail}_{entry.iteration}",
+                                            value=entry.cot_trace,
+                                            height=150,
+                                            disabled=True,
+                                            label_visibility="collapsed",
+                                        )
+
+                    else:
+                        # Trường hợp bài toán chưa có lịch sử chi tiết trong bộ nhớ (ví dụ chạy từ đợt trước)
+                        r_info = r_map.get(chosen_detail, {})
+                        meta_match = next((v for k, v in flat_registry.items() if v["short_name"] == chosen_detail), None)
+
+                        col_inf1, col_inf2, col_inf3, col_inf4 = st.columns(4)
+                        with col_inf1:
+                            st.metric("Kết Quả Z3", r_info.get("Kết Quả Z3", "N/A"))
+                        with col_inf2:
+                            st.metric("Lượt Hội Tụ", r_info.get("Lượt Hội Tụ", "N/A"))
+                        with col_inf3:
+                            st.metric("Thời Gian Thực Nghiệm", f"{r_info.get('Thời Gian (s)', 0)}s")
+                        with col_inf4:
+                            st.metric("Hình Thái Giải Thuật", r_info.get("Hình Thái", "N/A"))
+
+                        if meta_match:
+                            spec_c = load_task_spec(meta_match["rel_path"])
+                            with st.expander(f"📄 Xem đặc tả bài toán '{chosen_detail}' (.dfy)", expanded=False):
+                                st.code(spec_c, language="dafny")
+
+                            if st.button(f"⚡ Trích Xuất & Hiển Thị Các Lượt Chạy 1, 2, 3 Của Bài '{chosen_detail}'", type="primary", use_container_width=True):
+                                with st.spinner(f"Đang kiểm định và ghi nhận vết tự sửa lỗi cho '{chosen_detail}'..."):
+                                    ag = LLMAgent(model_name=model_name, temperature=temperature)
+                                    eng = DafnyEngine(timeout_sec=timeout_sec)
+                                    ctrl = PipelineController(agent=ag, engine=eng, max_k=max_k, verbose=False)
+                                    res_item = ctrl.run_task(raw_spec=spec_c, task_name=chosen_detail)
+
+                                    if "batch_history_dict" not in st.session_state:
+                                        st.session_state["batch_history_dict"] = {}
+                                    st.session_state["batch_history_dict"][chosen_detail] = {
+                                        "result": res_item,
+                                        "spec": spec_c,
+                                        "info": meta_match,
+                                    }
+                                    st.session_state["last_result"] = res_item
+                                    st.session_state["spec_content"] = spec_c
+
+                                    # Tự động cập nhật vào last_batch_details.json
+                                    save_last_batch_run(
+                                        results_list=st.session_state.get("last_batch_results", []),
+                                        total_batch_time=0.0,
+                                        model_name=model_name,
+                                        max_k=max_k,
+                                        timeout_sec=timeout_sec,
+                                        batch_history_dict=st.session_state["batch_history_dict"],
+                                    )
+                                    st.rerun()
+
 
     elif exec_mode == "Tự do":
         # ======================================================================
@@ -628,7 +802,7 @@ method BinarySearch(a: array<int>, target: int) returns (index: int)
                         st.markdown(
                             f"""
                             <div class="status-card-pass">
-                                🏆 THÀNH CÔNG RỰC RỠ: Z3 SMT Solver đã chứng minh toán học tính đúng đắn 100%!
+                                🏆 XÁC MINH THÀNH CÔNG: Mã nguồn đã được Dafny & Z3 Solver chứng minh theo đặc tả!
                                 <br><small>Thời gian thực thi: {elapsed_pg:.2f}s | Hội tụ tại Lượt {res_pg.total_iterations}/{max_k}</small>
                             </div>
                             """,

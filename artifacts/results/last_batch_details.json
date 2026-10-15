@@ -1,0 +1,668 @@
+{
+  "abs_val": {
+    "spec": "// Bài toán: Tính giá trị tuyệt đối của số nguyên x\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod Abs(x: int) returns (y: int)\n    ensures x >= 0 ==> y == x\n    ensures x < 0 ==> y == -x\n    ensures y >= 0\n{\n    // Thân hàm để trống cho LLM hoàn thiện\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method Abs(x: int) returns (y: int)\n    ensures x >= 0 ==> y == x\n    ensures x < 0 ==> y == -x\n    ensures y >= 0\n{\n    if x >= 0 {\n        y := x;\n    } else {\n        y := -x;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method Abs(x: int) returns (y: int)\n    ensures x >= 0 ==> y == x\n    ensures x < 0 ==> y == -x\n    ensures y >= 0\n{\n    if x >= 0 {\n        y := x;\n    } else {\n        y := -x;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "find_min": {
+    "spec": "// Bài toán: Tìm giá trị nhỏ nhất giữa hai số nguyên a và b\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod Min(a: int, b: int) returns (m: int)\n    ensures m <= a && m <= b\n    ensures m == a || m == b\n{\n    // Thân hàm để trống cho LLM hoàn thiện\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method Min(a: int, b: int) returns (m: int)\n    ensures m <= a && m <= b\n    ensures m == a || m == b\n{\n    if a <= b {\n        m := a;\n    } else {\n        m := b;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method Min(a: int, b: int) returns (m: int)\n    ensures m <= a && m <= b\n    ensures m == a || m == b\n{\n    if a <= b {\n        m := a;\n    } else {\n        m := b;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "linear_search": {
+    "spec": "// Bài toán: Tìm kiếm phần tử target trong mảng số nguyên\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod LinearSearch(a: array<int>, target: int) returns (r: int)\n    ensures r >= 0 ==> r < a.Length && a[r] == target\n    ensures r == -1 ==> forall i :: 0 <= i < a.Length ==> a[i] != target\n{\n    // Thân hàm để trống cho LLM hoàn thiện\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method LinearSearch(a: array<int>, target: int) returns (r: int)\n    ensures r >= 0 ==> r < a.Length && a[r] == target\n    ensures r == -1 ==> forall i :: 0 <= i < a.Length ==> a[i] != target\n{\n    var i := 0;\n    while i < a.Length\n        invariant 0 <= i <= a.Length\n        invariant forall k :: 0 <= k < i ==> a[k] != target\n        decreases a.Length - i\n    {\n        if a[i] == target {\n            r := i;\n\n            return;\n        }\n        i := i + 1;\n    }\n    r := -1;\n\n    return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method LinearSearch(a: array<int>, target: int) returns (r: int)\n    ensures r >= 0 ==> r < a.Length && a[r] == target\n    ensures r == -1 ==> forall i :: 0 <= i < a.Length ==> a[i] != target\n{\n    var i := 0;\n    while i < a.Length\n        invariant 0 <= i <= a.Length\n        invariant forall k :: 0 <= k < i ==> a[k] != target\n        decreases a.Length - i\n    {\n        if a[i] == target {\n            r := i;\n\n            return;\n        }\n        i := i + 1;\n    }\n    r := -1;\n\n    return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "sample_max": {
+    "spec": "// Bài toán mẫu từ tập CloverBench: Tìm giá trị lớn nhất giữa hai số nguyên a và b\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod Max(a: int, b: int) returns (m: int)\n    ensures m >= a && m >= b\n    ensures m == a || m == b\n{\n    // Thân hàm để trống cho LLM sinh mã thuật toán\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method Max(a: int, b: int) returns (m: int)\n    ensures m >= a && m >= b\n    ensures m == a || m == b\n{\n    if a >= b {\n        m := a;\n    } else {\n        m := b;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method Max(a: int, b: int) returns (m: int)\n    ensures m >= a && m >= b\n    ensures m == a || m == b\n{\n    if a >= b {\n        m := a;\n    } else {\n        m := b;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "sign_function": {
+    "spec": "// Bài toán: Tính dấu của một số nguyên x (-1 nếu âm, 0 nếu bằng 0, 1 nếu dương)\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod Sign(x: int) returns (s: int)\n    ensures x < 0 ==> s == -1\n    ensures x == 0 ==> s == 0\n    ensures x > 0 ==> s == 1\n{\n    // Thân hàm để trống cho LLM hoàn thiện\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method Sign(x: int) returns (s: int)\n    ensures x < 0 ==> s == -1\n    ensures x == 0 ==> s == 0\n    ensures x > 0 ==> s == 1\n{\n    if x < 0 {\n        s := -1;\n    } else if x == 0 {\n        s := 0;\n    } else {\n        s := 1;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method Sign(x: int) returns (s: int)\n    ensures x < 0 ==> s == -1\n    ensures x == 0 ==> s == 0\n    ensures x > 0 ==> s == 1\n{\n    if x < 0 {\n        s := -1;\n    } else if x == 0 {\n        s := 0;\n    } else {\n        s := 1;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "sum_to_n": {
+    "spec": "// Bài toán: Tính tổng các số nguyên không âm từ 0 đến n\n// Yêu cầu: Sử dụng vòng lặp và bất biến vòng lặp (loop invariant) để chứng minh\n// Đặc tả ensures được khóa cứng bằng SHA-256 qua SpecLocker\n\nmethod SumToN(n: int) returns (s: int)\n    requires n >= 0\n    ensures s == n * (n + 1) / 2\n{\n    // Thân hàm để trống cho LLM hoàn thiện (cần vòng lặp và loop invariant)\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method SumToN(n: int) returns (s: int)\n    requires n >= 0\n    ensures s == n * (n + 1) / 2\n{\n    s := 0;\n    var i := 0;\n    while i < n\n        invariant 0 <= i <= n\n        invariant s == i * (i + 1) / 2\n        decreases n - i\n{\n        i := i + 1;\n        s := s + i;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method SumToN(n: int) returns (s: int)\n    requires n >= 0\n    ensures s == n * (n + 1) / 2\n{\n    s := 0;\n    var i := 0;\n    while i < n\n        invariant 0 <= i <= n\n        invariant s == i * (i + 1) / 2\n        decreases n - i\n{\n        i := i + 1;\n        s := s + i;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "002-truncate": {
+    "spec": "\n\nmethod truncate_number(x : real) returns (d : real)\n    // pre-conditions-start\n    requires x >= 0.0\n    // pre-conditions-end\n    // post-conditions-start\n    ensures (0.0 <= d <= 1.0)\n    ensures (x - d) == (x.Floor as real)\n    // post-conditions-end\n    {\n      // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n    }\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method truncate_number(x : real) returns (d : real)\n    requires x >= 0.0\n    ensures (0.0 <= d <= 1.0)\n    ensures (x - d) == (x.Floor as real)\n{\n    d := x - (x.Floor as real);\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method truncate_number(x : real) returns (d : real)\n    requires x >= 0.0\n    ensures (0.0 <= d <= 1.0)\n    ensures (x - d) == (x.Floor as real)\n{\n    d := x - (x.Floor as real);\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "013-greatest_common_divisor": {
+    "spec": "// recursive version should be more promising\nmethod greatest_common_divisor(a: int, b: int) returns (gcd: int)\n    // pre-conditions-start\n    requires a != 0 || b != 0\n    // pre-conditions-end\n    // post-conditions-start\n    ensures gcd != 0\n    // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method greatest_common_divisor(a: int, b: int) returns (gcd: int)\n    requires a != 0 || b != 0\n    ensures gcd != 0\n{\n    var x := if a < 0 then -a else a;\n    var y := if b < 0 then -b else b;\n    if x == 0 { gcd := y;\n return; }\n    if y == 0 { gcd := x;\n return; }\n    while y > 0\n        invariant x > 0\n        invariant y >= 0\n        decreases y\n    {\n        var temp := y;\n        y := x % y;\n        x := temp;\n    }\n    gcd := x;\n\n    return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method greatest_common_divisor(a: int, b: int) returns (gcd: int)\n    requires a != 0 || b != 0\n    ensures gcd != 0\n{\n    var x := if a < 0 then -a else a;\n    var y := if b < 0 then -b else b;\n    if x == 0 { gcd := y;\n return; }\n    if y == 0 { gcd := x;\n return; }\n    while y > 0\n        invariant x > 0\n        invariant y >= 0\n        decreases y\n    {\n        var temp := y;\n        y := x % y;\n        x := temp;\n    }\n    gcd := x;\n\n    return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "031-is-prime": {
+    "spec": "method is_prime(k: int) returns (result: bool)\n  // pre-conditions-start\n  requires k >= 1\n  // pre-conditions-end\n  // post-conditions-start\n  ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  ensures (k > 1 && !result) ==> exists j :: 2 <= j < k && k % j == 0\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 2,
+    "final_code": "method is_prime(k: int) returns (result: bool)\n  requires k >= 1\n  ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  ensures (k > 1 && !result) ==> exists j :: 2 <= j < k && k % j == 0\n{\n  result := true;\n\n  if k <= 1 {\n    result := false;\n    return;\n  }\n\n  var i := 2;\n  while i < k\n    invariant 2 <= i <= k\n    invariant result ==> forall j :: 2 <= j < i ==> k % j != 0\n    decreases k - i\n  {\n    if k % i == 0 {\n      result := false;\n      return;\n    }\n    i := i + 1;\n  }\n\n  result := true;\n  return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method is_prime(k: int) returns (result: bool)\n  requires k >= 1\n  ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  ensures (k > 1 && !result) ==> exists j :: 2 <= j < k && k % j == 0\n{\n  if k <= 1 {\n    result := false;\n\n    return;\n  }\n\n  var i := 2;\n  while i < k\n    invariant 2 <= i <= k\n    decreases k - i\n  {\n    if k % i == 0 {\n      result := false;\n\n      return;\n    }\n    i := i + 1;\n  }\n\n  result := true;\n\n\n  return;\n}",
+        "is_spec_valid": true,
+        "is_verified": false,
+        "error_taxonomy": "PostconditionViolation",
+        "error_message": "[PostconditionViolation] tại Dòng 28, Cột 2: a postcondition could not be proved on this return path\n-> Dòng mã vi phạm: `return;`\n-> Mệnh đề liên quan: `ensures result ==> forall i :: 2 <= i < k ==> k % i != 0`\n-> Phản ví dụ Z3 (CEGAR): Đầu vào: [k = 4] ➔ Kết quả: [i = 4, result = true] ➔ Vi phạm: `ensures result ==> forall i :: 2 <= i < k ==> k % i != 0`\n-> Hướng dẫn khắc phục: HẬU ĐIỀU KIỆN CHỨA ĐỊNH LƯỢNG TOÀN THỂ (FORALL) BỊ VI PHẠM: `ensures result ==> forall i :: 2 <= i < k ==> k % i != 0`.\nNGUYÊN LÝ BẤT BIẾN TIỀN TỐ (PREFIX INDUCTIVE INVARIANT): Để Z3 suy diễn được hậu điều kiện toàn thể, vòng lặp BẮT BUỘC phải duy trì bất biến tiền tố cho các phần tử đã duyệt:\n-> [HÀNH ĐỘNG BẮT BUỘC]: Bổ sung đầy đủ các mệnh đề invariant sau vào ngay dưới từ khóa while (theo đúng thứ tự):\n   `invariant forall j :: 2 <= j < i ==> k % j != 0`\n-> [LƯU Ý VÒNG LẶP SỐ NGUYÊN TỐ]: Z3 SMT Solver không thể suy diễn quy nạp qua căn bậc hai nếu thiếu bổ đề phi tuyến. BẮT BUỘC phải xử lý trường hợp biên trước vòng lặp: `if k <= 1 { result := false; } else { ... }` và trong nhánh else duyệt tuyến tính `while i < k` (TUYỆT ĐỐI KHÔNG dùng `while i * i <= k`) kèm `decreases k - i` và `invariant result ==> forall j :: 2 <= j < i ==> k % j != 0`.",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "Đầu vào: [k = 4] ➔ Kết quả: [i = 4, result = true] ➔ Vi phạm: `ensures result ==> forall i :: 2 <= i < k ==> k % i != 0`",
+        "has_cegar": true
+      },
+      {
+        "iteration": 2,
+        "code": "method is_prime(k: int) returns (result: bool)\n  requires k >= 1\n  ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  ensures (k > 1 && !result) ==> exists j :: 2 <= j < k && k % j == 0\n{\n  result := true;\n\n  if k <= 1 {\n    result := false;\n    return;\n  }\n\n  var i := 2;\n  while i < k\n    invariant 2 <= i <= k\n    invariant result ==> forall j :: 2 <= j < i ==> k % j != 0\n    decreases k - i\n  {\n    if k % i == 0 {\n      result := false;\n      return;\n    }\n    i := i + 1;\n  }\n\n  result := true;\n  return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "035-max-element": {
+    "spec": "method max_element(l : seq<int>) returns (result : int)\n    // pre-conditions-start\n    requires |l| > 0\n    // pre-conditions-end\n    // post-conditions-start\n    ensures forall i : int :: i >= 0 && i < |l| ==> l[i] <= result\n    ensures exists i : int :: i >= 0 && i < |l| && l[i] == result\n    // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method max_element(l : seq<int>) returns (result : int)\n    requires |l| > 0\n    ensures forall i : int :: i >= 0 && i < |l| ==> l[i] <= result\n    ensures exists i : int :: i >= 0 && i < |l| && l[i] == result\n{\n    var max := l[0];\n    var i := 1;\n    while i < |l|\n        invariant 0 <= i <= |l|\n        invariant exists j :: 0 <= j < i && l[j] == max\n        invariant forall j :: 0 <= j < i ==> l[j] <= max\n        decreases |l| - i\n    {\n        if l[i] > max {\n            max := l[i];\n        }\n        i := i + 1;\n    }\n    result := max;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method max_element(l : seq<int>) returns (result : int)\n    requires |l| > 0\n    ensures forall i : int :: i >= 0 && i < |l| ==> l[i] <= result\n    ensures exists i : int :: i >= 0 && i < |l| && l[i] == result\n{\n    var max := l[0];\n    var i := 1;\n    while i < |l|\n        invariant 0 <= i <= |l|\n        invariant exists j :: 0 <= j < i && l[j] == max\n        invariant forall j :: 0 <= j < i ==> l[j] <= max\n        decreases |l| - i\n    {\n        if l[i] > max {\n            max := l[i];\n        }\n        i := i + 1;\n    }\n    result := max;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "052-below-threshold": {
+    "spec": "method below_threshold(l : seq<int>, t : int) returns (b : bool)\n    // post-conditions-start\n    ensures b == (forall i : int :: i >= 0 && i < |l| ==> l[i] < t)\n    // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method below_threshold(l : seq<int>, t : int) returns (b : bool)\n    // post-conditions-start\n    ensures b == (forall i : int :: i >= 0 && i < |l| ==> l[i] < t)\n    // post-conditions-end\n{\n    var i := 0;\n    b := true;\n    while i < |l|\n        invariant 0 <= i <= |l|\n        invariant forall j : int :: 0 <= j < i ==> l[j] < t\n        decreases |l| - i\n    {\n        if l[i] >= t {\n            b := false;\n            break;\n        }\n        i := i + 1;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method below_threshold(l : seq<int>, t : int) returns (b : bool)\n    // post-conditions-start\n    ensures b == (forall i : int :: i >= 0 && i < |l| ==> l[i] < t)\n    // post-conditions-end\n{\n    var i := 0;\n    b := true;\n    while i < |l|\n        invariant 0 <= i <= |l|\n        invariant forall j : int :: 0 <= j < i ==> l[j] < t\n        decreases |l| - i\n    {\n        if l[i] >= t {\n            b := false;\n            break;\n        }\n        i := i + 1;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "055-fib": {
+    "spec": "function fib(n: nat): nat\n  decreases n\n{\n  if n == 0 then 0\n  else if n == 1 then 1\n  else fib(n - 1) + fib(n - 2)\n}\n// pure-end\nmethod ComputeFib(n: nat) returns (result: nat)\n  // post-conditions-start\n  ensures result == fib(n)\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function fib(n: nat): nat\n  decreases n\n{\n  if n == 0 then 0\n  else if n == 1 then 1\n  else fib(n - 1) + fib(n - 2)\n}\n// pure-end\nmethod ComputeFib(n: nat) returns (result: nat)\n  // post-conditions-start\n  ensures result == fib(n)\n  // post-conditions-end\n{\n  var a := 0;\n  var b := 1;\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant a == fib(i)\n    invariant b == fib(i + 1)\n    decreases n - i\n  {\n    var temp := a + b;\n    a := b;\n    b := temp;\n    i := i + 1;\n  }\n  result := b;\n  result := a;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function fib(n: nat): nat\n  decreases n\n{\n  if n == 0 then 0\n  else if n == 1 then 1\n  else fib(n - 1) + fib(n - 2)\n}\n// pure-end\nmethod ComputeFib(n: nat) returns (result: nat)\n  // post-conditions-start\n  ensures result == fib(n)\n  // post-conditions-end\n{\n  var a := 0;\n  var b := 1;\n  var i := 0;\n  while i < n\n    invariant 0 <= i <= n\n    invariant a == fib(i)\n    invariant b == fib(i + 1)\n    decreases n - i\n  {\n    var temp := a + b;\n    a := b;\n    b := temp;\n    i := i + 1;\n  }\n  result := b;\n  result := a;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "000-has_close_elements": {
+    "spec": "function abs(val : real): real\n{\n  if (val < 0.0) then\n    -val\n  else\n    val\n}\n// pure-end\nmethod has_close_elements(numbers: seq<real>, threshold: real) returns (flag : bool)\n  // pre-conditions-start\n  requires threshold > 0.0\n  // pre-conditions-end\n  // post-conditions-start\n  ensures flag == (exists i: int, j: int :: i >= 0 && j >= 0 && i < |numbers| && j < |numbers| && i != j && abs(numbers[i] - numbers[j]) < threshold)\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function abs(val : real): real\n{\n  if (val < 0.0) then\n    -val\n  else\n    val\n}\n// pure-end\n\nmethod has_close_elements(numbers: seq<real>, threshold: real) returns (flag : bool)\n  requires threshold > 0.0\n  ensures flag == (exists i: int, j: int :: i >= 0 && j >= 0 && i < |numbers| && j < |numbers| && i != j && abs(numbers[i] - numbers[j]) < threshold)\n{\n  flag := false;\n  var i := 0;\n  while i < |numbers|\n    invariant 0 <= i <= |numbers|\n    invariant forall a: int, b: int :: 0 <= a < i && 0 <= b < |numbers| && a != b ==> abs(numbers[a] - numbers[b]) >= threshold\n    decreases |numbers| - i\n  {\n    var j := 0;\n    while j < |numbers|\n      invariant 0 <= j <= |numbers|\n      invariant forall b: int :: 0 <= b < j && b != i ==> abs(numbers[i] - numbers[b]) >= threshold\n      decreases |numbers| - j\n    {\n      if i != j && abs(numbers[i] - numbers[j]) < threshold {\n        flag := true;\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function abs(val : real): real\n{\n  if (val < 0.0) then\n    -val\n  else\n    val\n}\n// pure-end\n\nmethod has_close_elements(numbers: seq<real>, threshold: real) returns (flag : bool)\n  requires threshold > 0.0\n  ensures flag == (exists i: int, j: int :: i >= 0 && j >= 0 && i < |numbers| && j < |numbers| && i != j && abs(numbers[i] - numbers[j]) < threshold)\n{\n  flag := false;\n  var i := 0;\n  while i < |numbers|\n    invariant 0 <= i <= |numbers|\n    invariant forall a: int, b: int :: 0 <= a < i && 0 <= b < |numbers| && a != b ==> abs(numbers[a] - numbers[b]) >= threshold\n    decreases |numbers| - i\n  {\n    var j := 0;\n    while j < |numbers|\n      invariant 0 <= j <= |numbers|\n      invariant forall b: int :: 0 <= b < j && b != i ==> abs(numbers[i] - numbers[b]) >= threshold\n      decreases |numbers| - j\n    {\n      if i != j && abs(numbers[i] - numbers[j]) < threshold {\n        flag := true;\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "010-is_palindrome": {
+    "spec": "function is_palindrome(s : string) : bool {\n    forall k :: 0 <= k < |s| ==> s[k] == s[|s| - 1 - k]\n}\n// pure-end\nfunction starts_with(result : string, s : string) : bool {\n    |result| >= |s| && forall k :: 0 <= k < |s| ==> result[k] == s[k]\n}\n// pure-end\nmethod make_palindrome(s: string) returns (result: string)\n    // post-conditions-start\n    ensures |result| <= 2 * |s|\n    ensures is_palindrome(result)\n    ensures starts_with(result, s)\n    // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n\nmethod reverse(str: string) returns (rev: string)\n    // post-conditions-start\n    ensures |rev| == |str|\n    ensures forall k :: 0 <= k < |str| ==> rev[k] == str[|str| - 1 - k]\n    // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function is_palindrome(s : string) : bool {\n    forall k :: 0 <= k < |s| ==> s[k] == s[|s| - 1 - k]\n}\n// pure-end\nfunction starts_with(result : string, s : string) : bool {\n    |result| >= |s| && forall k :: 0 <= k < |s| ==> result[k] == s[k]\n}\n// pure-end\nmethod make_palindrome(s: string) returns (result: string)\n    // post-conditions-start\n    ensures |result| <= 2 * |s|\n    ensures is_palindrome(result)\n    ensures starts_with(result, s)\n    // post-conditions-end\n{\n    var rev := reverse(s);\n    result := s + rev;\n    forall k | 0 <= k < |result|\n        ensures result[k] == result[|result| - 1 - k]\n    {\n        if k < |s| {\n            assert result[k] == s[k];\n            assert result[|result| - 1 - k] == rev[|s| - 1 - k];\n        } else {\n            var j := k - |s|;\n            assert result[k] == rev[j];\n            assert result[|result| - 1 - k] == s[|s| - 1 - j];\n        }\n    }\n}\n\nmethod reverse(str: string) returns (rev: string)\n    // post-conditions-start\n    ensures |rev| == |str|\n    ensures forall k :: 0 <= k < |str| ==> rev[k] == str[|str| - 1 - k]\n    // post-conditions-end\n{\n    rev := [];\n    var i := 0;\n    while i < |str|\n        invariant 0 <= i <= |str|\n        invariant |rev| == i\n        invariant forall k :: 0 <= k < i ==> rev[k] == str[|str| - 1 - k]\n        decreases |str| - i\n    {\n        rev := rev + [str[|str| - 1 - i]];\n        i := i + 1;\n    }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function is_palindrome(s : string) : bool {\n    forall k :: 0 <= k < |s| ==> s[k] == s[|s| - 1 - k]\n}\n// pure-end\nfunction starts_with(result : string, s : string) : bool {\n    |result| >= |s| && forall k :: 0 <= k < |s| ==> result[k] == s[k]\n}\n// pure-end\nmethod make_palindrome(s: string) returns (result: string)\n    // post-conditions-start\n    ensures |result| <= 2 * |s|\n    ensures is_palindrome(result)\n    ensures starts_with(result, s)\n    // post-conditions-end\n{\n    var rev := reverse(s);\n    result := s + rev;\n    forall k | 0 <= k < |result|\n        ensures result[k] == result[|result| - 1 - k]\n    {\n        if k < |s| {\n            assert result[k] == s[k];\n            assert result[|result| - 1 - k] == rev[|s| - 1 - k];\n        } else {\n            var j := k - |s|;\n            assert result[k] == rev[j];\n            assert result[|result| - 1 - k] == s[|s| - 1 - j];\n        }\n    }\n}\n\nmethod reverse(str: string) returns (rev: string)\n    // post-conditions-start\n    ensures |rev| == |str|\n    ensures forall k :: 0 <= k < |str| ==> rev[k] == str[|str| - 1 - k]\n    // post-conditions-end\n{\n    rev := [];\n    var i := 0;\n    while i < |str|\n        invariant 0 <= i <= |str|\n        invariant |rev| == i\n        invariant forall k :: 0 <= k < i ==> rev[k] == str[|str| - 1 - k]\n        decreases |str| - i\n    {\n        rev := rev + [str[|str| - 1 - i]];\n        i := i + 1;\n    }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "077-iscube": {
+    "spec": "method cube_root(N: nat) returns (r: nat)\n  // post-conditions-start\n  ensures cube(r) <= N < cube(r + 1)\n  ensures r <= N\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n\nmethod iscube(n: int) returns (r: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures r && n >= 0 ==> exists r :: 0 <= r <= n && n == cube(r)\n  ensures !r && n >= 0 ==> forall r :: 0 <= r <= n ==> n != cube(r)\n  ensures r && n < 0 ==> exists r :: 0 <= r <= -n && n == -cube(r)\n  ensures !r && n < 0 ==> forall r :: 0 <= r <= -n ==> n != -cube(r)\n  // post-conditions-end\n{\n    // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n\nfunction cube(n: int): int { n * n * n }\n// pure-end\nlemma cube_of_larger_is_larger()\n    ensures forall smaller : int, larger : int :: smaller <= larger ==> cube(smaller) <= cube(larger)\n{}\n// pure-end\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method cube_root(N: nat) returns (r: nat)\n  // post-conditions-start\n  ensures cube(r) <= N < cube(r + 1)\n  ensures r <= N\n  // post-conditions-end\n{\n  r := 0;\n  while (r + 1) * (r + 1) * (r + 1) <= N\n    invariant cube(r) <= N\n    decreases N - cube(r)\n  {\n    r := r + 1;\n  }\n}\n\nmethod iscube(n: int) returns (r: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures r && n >= 0 ==> exists r :: 0 <= r <= n && n == cube(r)\n  ensures !r && n >= 0 ==> forall r :: 0 <= r <= n ==> n != cube(r)\n  ensures r && n < 0 ==> exists r :: 0 <= r <= -n && n == -cube(r)\n  ensures !r && n < 0 ==> forall r :: 0 <= r <= -n ==> n != -cube(r)\n  // post-conditions-end\n{\n  cube_of_larger_is_larger();\n  var val: nat := if n < 0 then -n else n;\n  var root := cube_root(val);\n  r := (cube(root) == val);\n}\n\nfunction cube(n: int): int { n * n * n }\n// pure-end\n\nlemma cube_of_larger_is_larger()\n    ensures forall smaller : int, larger : int :: smaller <= larger ==> cube(smaller) <= cube(larger)\n{}\n// pure-end",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method cube_root(N: nat) returns (r: nat)\n  // post-conditions-start\n  ensures cube(r) <= N < cube(r + 1)\n  ensures r <= N\n  // post-conditions-end\n{\n  r := 0;\n  while (r + 1) * (r + 1) * (r + 1) <= N\n    invariant cube(r) <= N\n    decreases N - cube(r)\n  {\n    r := r + 1;\n  }\n}\n\nmethod iscube(n: int) returns (r: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures r && n >= 0 ==> exists r :: 0 <= r <= n && n == cube(r)\n  ensures !r && n >= 0 ==> forall r :: 0 <= r <= n ==> n != cube(r)\n  ensures r && n < 0 ==> exists r :: 0 <= r <= -n && n == -cube(r)\n  ensures !r && n < 0 ==> forall r :: 0 <= r <= -n ==> n != -cube(r)\n  // post-conditions-end\n{\n  cube_of_larger_is_larger();\n  var val: nat := if n < 0 then -n else n;\n  var root := cube_root(val);\n  r := (cube(root) == val);\n}\n\nfunction cube(n: int): int { n * n * n }\n// pure-end\n\nlemma cube_of_larger_is_larger()\n    ensures forall smaller : int, larger : int :: smaller <= larger ==> cube(smaller) <= cube(larger)\n{}\n// pure-end",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "088-sort_array": {
+    "spec": "method sort_array(s: seq<int>) returns (sorted: seq<int>)\n  // post-conditions-start\n  ensures |sorted| == |s|\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 == 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] >= sorted[j]\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 != 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n\nmethod reverse(s: seq<int>) returns (rev: seq<int>)\n  // post-conditions-start\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n\n\nmethod SortSeq(s: seq<int>) returns (sorted: seq<int>)\n  // post-conditions-start\n  ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n  ensures |sorted| == |s|\n  ensures multiset(s) == multiset(sorted)\n  // post-conditions-end\n{\n  // impl-start\n    // Thân hàm để trống cho LLM tự sinh mã thuật toán\n    // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function insert(x: int, s: seq<int>): seq<int>\n  decreases |s|\n{\n  if |s| == 0 then [x]\n  else if x <= s[0] then [x] + s\n  else [s[0]] + insert(x, s[1..])\n}\n\nlemma insert_multiset(x: int, s: seq<int>)\n  ensures multiset(insert(x, s)) == multiset(s) + multiset{x}\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n    assert insert(x, s) == [x] + s;\n  } else {\n    insert_multiset(x, s[1..]);\n    assert s == [s[0]] + s[1..];\n    assert insert(x, s) == [s[0]] + insert(x, s[1..]);\n  }\n}\n\nlemma insert_len(x: int, s: seq<int>)\n  ensures |insert(x, s)| == |s| + 1\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n  } else {\n    insert_len(x, s[1..]);\n  }\n}\n\npredicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n\nlemma insert_sorted(x: int, s: seq<int>)\n  requires is_sorted(s)\n  ensures is_sorted(insert(x, s))\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n    forall i, j | 0 <= i < j < |insert(x, s)|\n      ensures insert(x, s)[i] <= insert(x, s)[j]\n    {\n      if i == 0 {}\n    }\n  } else {\n    insert_sorted(x, s[1..]);\n    insert_len(x, s[1..]);\n    var rest := insert(x, s[1..]);\n    forall i, j | 0 <= i < j < |insert(x, s)|\n      ensures insert(x, s)[i] <= insert(x, s)[j]\n    {\n      if i == 0 {\n        if |s[1..]| == 0 || x <= s[1..][0] {\n          assert rest[0] == x;\n        } else {\n          assert rest[0] == s[1];\n        }\n      }\n    }\n  }\n}\n\nlemma reverse_sorted_lemma(asc: seq<int>, rev: seq<int>)\n  requires |rev| == |asc|\n  requires forall k :: 0 <= k < |asc| ==> rev[k] == asc[|asc| - 1 - k]\n  requires forall i, j :: 0 <= i < j < |asc| ==> asc[i] <= asc[j]\n  ensures forall i, j :: 0 <= i < j < |rev| ==> rev[i] >= rev[j]\n{\n  forall i, j | 0 <= i < j < |rev|\n    ensures rev[i] >= rev[j]\n  {\n    var a := |asc| - 1 - j;\n    var b := |asc| - 1 - i;\n    assert asc[a] <= asc[b];\n  }\n}\n\nmethod sort_array(s: seq<int>) returns (sorted: seq<int>)\n  ensures |sorted| == |s|\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 == 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] >= sorted[j]\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 != 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n{\n  if |s| == 0 { sorted := []; return; }\n  var asc := SortSeq(s);\n  if (s[0] + s[|s| - 1]) % 2 == 0 {\n    var rev := reverse(asc);\n    reverse_sorted_lemma(asc, rev);\n    sorted := rev;\n  } else {\n    sorted := asc;\n  }\n}\n\nmethod reverse(s: seq<int>) returns (rev: seq<int>)\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n{\n  rev := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |rev| == i\n    invariant forall k :: 0 <= k < i ==> rev[k] == s[|s| - 1 - k]\n    decreases |s| - i\n  {\n    rev := rev + [s[|s| - 1 - i]];\n    i := i + 1;\n  }\n}\n\nmethod SortSeq(s: seq<int>) returns (sorted: seq<int>)\n  ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n  ensures |sorted| == |s|\n  ensures multiset(s) == multiset(sorted)\n{\n  sorted := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |sorted| == i\n    invariant is_sorted(sorted)\n    invariant multiset(sorted) == multiset(s[..i])\n    decreases |s| - i\n  {\n    insert_len(s[i], sorted);\n    insert_sorted(s[i], sorted);\n    insert_multiset(s[i], sorted);\n    sorted := insert(s[i], sorted);\n    assert s[..i+1] == s[..i] + [s[i]];\n    i := i + 1;\n  }\n  assert s[..|s|] == s;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function insert(x: int, s: seq<int>): seq<int>\n  decreases |s|\n{\n  if |s| == 0 then [x]\n  else if x <= s[0] then [x] + s\n  else [s[0]] + insert(x, s[1..])\n}\n\nlemma insert_multiset(x: int, s: seq<int>)\n  ensures multiset(insert(x, s)) == multiset(s) + multiset{x}\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n    assert insert(x, s) == [x] + s;\n  } else {\n    insert_multiset(x, s[1..]);\n    assert s == [s[0]] + s[1..];\n    assert insert(x, s) == [s[0]] + insert(x, s[1..]);\n  }\n}\n\nlemma insert_len(x: int, s: seq<int>)\n  ensures |insert(x, s)| == |s| + 1\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n  } else {\n    insert_len(x, s[1..]);\n  }\n}\n\npredicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n\nlemma insert_sorted(x: int, s: seq<int>)\n  requires is_sorted(s)\n  ensures is_sorted(insert(x, s))\n{\n  if |s| == 0 {\n  } else if x <= s[0] {\n    forall i, j | 0 <= i < j < |insert(x, s)|\n      ensures insert(x, s)[i] <= insert(x, s)[j]\n    {\n      if i == 0 {}\n    }\n  } else {\n    insert_sorted(x, s[1..]);\n    insert_len(x, s[1..]);\n    var rest := insert(x, s[1..]);\n    forall i, j | 0 <= i < j < |insert(x, s)|\n      ensures insert(x, s)[i] <= insert(x, s)[j]\n    {\n      if i == 0 {\n        if |s[1..]| == 0 || x <= s[1..][0] {\n          assert rest[0] == x;\n        } else {\n          assert rest[0] == s[1];\n        }\n      }\n    }\n  }\n}\n\nlemma reverse_sorted_lemma(asc: seq<int>, rev: seq<int>)\n  requires |rev| == |asc|\n  requires forall k :: 0 <= k < |asc| ==> rev[k] == asc[|asc| - 1 - k]\n  requires forall i, j :: 0 <= i < j < |asc| ==> asc[i] <= asc[j]\n  ensures forall i, j :: 0 <= i < j < |rev| ==> rev[i] >= rev[j]\n{\n  forall i, j | 0 <= i < j < |rev|\n    ensures rev[i] >= rev[j]\n  {\n    var a := |asc| - 1 - j;\n    var b := |asc| - 1 - i;\n    assert asc[a] <= asc[b];\n  }\n}\n\nmethod sort_array(s: seq<int>) returns (sorted: seq<int>)\n  ensures |sorted| == |s|\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 == 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] >= sorted[j]\n  ensures |s| > 0 && (s[0] + s[|s| - 1]) % 2 != 0 ==>\n    forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n{\n  if |s| == 0 { sorted := []; return; }\n  var asc := SortSeq(s);\n  if (s[0] + s[|s| - 1]) % 2 == 0 {\n    var rev := reverse(asc);\n    reverse_sorted_lemma(asc, rev);\n    sorted := rev;\n  } else {\n    sorted := asc;\n  }\n}\n\nmethod reverse(s: seq<int>) returns (rev: seq<int>)\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n{\n  rev := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |rev| == i\n    invariant forall k :: 0 <= k < i ==> rev[k] == s[|s| - 1 - k]\n    decreases |s| - i\n  {\n    rev := rev + [s[|s| - 1 - i]];\n    i := i + 1;\n  }\n}\n\nmethod SortSeq(s: seq<int>) returns (sorted: seq<int>)\n  ensures forall i, j :: 0 <= i < j < |sorted| ==> sorted[i] <= sorted[j]\n  ensures |sorted| == |s|\n  ensures multiset(s) == multiset(sorted)\n{\n  sorted := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |sorted| == i\n    invariant is_sorted(sorted)\n    invariant multiset(sorted) == multiset(s[..i])\n    decreases |s| - i\n  {\n    insert_len(s[i], sorted);\n    insert_sorted(s[i], sorted);\n    insert_multiset(s[i], sorted);\n    sorted := insert(s[i], sorted);\n    assert s[..i+1] == s[..i] + [s[i]];\n    i := i + 1;\n  }\n  assert s[..|s|] == s;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "binary_search": {
+    "spec": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n// pure-end\n\nmethod binary_search(s: seq<int>, key: int) returns (index: int)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n// pure-end\n\nmethod binary_search(s: seq<int>, key: int) returns (index: int)\n  requires is_sorted(s)\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n{\n  var low := 0;\n  var high := |s|;\n  while low < high\n    invariant 0 <= low <= high <= |s|\n    invariant forall k :: 0 <= k < low ==> s[k] < key\n    invariant forall k :: high <= k < |s| ==> s[k] > key\n    decreases high - low\n  {\n    var mid := low + (high - low) / 2;\n    if s[mid] == key {\n      index := mid;\n      return;\n    } else if s[mid] < key {\n      low := mid + 1;\n    } else {\n      high := mid;\n    }\n  }\n  index := -1;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n// pure-end\n\nmethod binary_search(s: seq<int>, key: int) returns (index: int)\n  requires is_sorted(s)\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n{\n  var low := 0;\n  var high := |s|;\n  while low < high\n    invariant 0 <= low <= high <= |s|\n    invariant forall k :: 0 <= k < low ==> s[k] < key\n    invariant forall k :: high <= k < |s| ==> s[k] > key\n    decreases high - low\n  {\n    var mid := low + (high - low) / 2;\n    if s[mid] == key {\n      index := mid;\n      return;\n    } else if s[mid] < key {\n      low := mid + 1;\n    } else {\n      high := mid;\n    }\n  }\n  index := -1;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "linear_search_last": {
+    "spec": "method linear_search_last(s: seq<int>, key: int) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key && (forall k :: index < k < |s| ==> s[k] != key)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method linear_search_last(s: seq<int>, key: int) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key && (forall k :: index < k < |s| ==> s[k] != key)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  // post-conditions-end\n{\n  var i := |s| - 1;\n  while i >= 0\n    invariant -1 <= i < |s|\n    invariant forall k :: i < k < |s| ==> s[k] != key\n    decreases i\n  {\n    if s[i] == key {\n      index := i;\n      return;\n    }\n    i := i - 1;\n  }\n  index := -1;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method linear_search_last(s: seq<int>, key: int) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] == key && (forall k :: index < k < |s| ==> s[k] != key)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  // post-conditions-end\n{\n  var i := |s| - 1;\n  while i >= 0\n    invariant -1 <= i < |s|\n    invariant forall k :: i < k < |s| ==> s[k] != key\n    decreases i\n  {\n    if s[i] == key {\n      index := i;\n      return;\n    }\n    i := i - 1;\n  }\n  index := -1;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "find_first_negative": {
+    "spec": "method find_first_negative(s: seq<int>) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] < 0 && (forall k :: 0 <= k < index ==> s[k] >= 0)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] >= 0\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method find_first_negative(s: seq<int>) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] < 0 && (forall k :: 0 <= k < index ==> s[k] >= 0)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] >= 0\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall k :: 0 <= k < i ==> s[k] >= 0\n    decreases |s| - i\n  {\n    if s[i] < 0 {\n      index := i;\n      return;\n    }\n    i := i + 1;\n  }\n  index := -1;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method find_first_negative(s: seq<int>) returns (index: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures -1 <= index < |s|\n  ensures index >= 0 ==> s[index] < 0 && (forall k :: 0 <= k < index ==> s[k] >= 0)\n  ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] >= 0\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall k :: 0 <= k < i ==> s[k] >= 0\n    decreases |s| - i\n  {\n    if s[i] < 0 {\n      index := i;\n      return;\n    }\n    i := i + 1;\n  }\n  index := -1;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "array_reverse": {
+    "spec": "method array_reverse(s: seq<int>) returns (rev: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method array_reverse(s: seq<int>) returns (rev: seq<int>)\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n{\n  rev := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |rev| == i\n    invariant forall k :: 0 <= k < i ==> rev[k] == s[|s| - 1 - k]\n    decreases |s| - i\n  {\n    rev := rev + [s[|s| - 1 - i]];\n    i := i + 1;\n  }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method array_reverse(s: seq<int>) returns (rev: seq<int>)\n  ensures |rev| == |s|\n  ensures forall k :: 0 <= k < |s| ==> rev[k] == s[|s| - 1 - k]\n{\n  rev := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |rev| == i\n    invariant forall k :: 0 <= k < i ==> rev[k] == s[|s| - 1 - k]\n    decreases |s| - i\n  {\n    rev := rev + [s[|s| - 1 - i]];\n    i := i + 1;\n  }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "is_array_sorted": {
+    "spec": "method is_array_sorted(s: seq<int>) returns (sorted: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sorted <==> forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method is_array_sorted(s: seq<int>) returns (sorted: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sorted <==> forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall a, b :: 0 <= a < i && a < b < |s| ==> s[a] <= s[b]\n    decreases |s| - i\n  {\n    var j := i + 1;\n    while j < |s|\n      invariant i < j <= |s|\n      invariant forall b :: i < b < j ==> s[i] <= s[b]\n      decreases |s| - j\n    {\n      if s[i] > s[j] {\n        sorted := false;\n        assert 0 <= i < j < |s| && s[i] > s[j];\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  sorted := true;\n  return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method is_array_sorted(s: seq<int>) returns (sorted: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sorted <==> forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall a, b :: 0 <= a < i && a < b < |s| ==> s[a] <= s[b]\n    decreases |s| - i\n  {\n    var j := i + 1;\n    while j < |s|\n      invariant i < j <= |s|\n      invariant forall b :: i < b < j ==> s[i] <= s[b]\n      decreases |s| - j\n    {\n      if s[i] > s[j] {\n        sorted := false;\n        assert 0 <= i < j < |s| && s[i] > s[j];\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  sorted := true;\n  return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "remove_element": {
+    "spec": "method remove_element(s: seq<int>, val: int) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures forall k :: 0 <= k < |res| ==> res[k] != val\n  ensures |res| <= |s|\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method remove_element(s: seq<int>, val: int) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures forall k :: 0 <= k < |res| ==> res[k] != val\n  ensures |res| <= |s|\n  // post-conditions-end\n{\n  res := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |res| <= i\n    invariant forall k :: 0 <= k < |res| ==> res[k] != val\n    decreases |s| - i\n  {\n    if s[i] != val {\n      res := res + [s[i]];\n    }\n    i := i + 1;\n  }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method remove_element(s: seq<int>, val: int) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures forall k :: 0 <= k < |res| ==> res[k] != val\n  ensures |res| <= |s|\n  // post-conditions-end\n{\n  res := [];\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant |res| <= i\n    invariant forall k :: 0 <= k < |res| ==> res[k] != val\n    decreases |s| - i\n  {\n    if s[i] != val {\n      res := res + [s[i]];\n    }\n    i := i + 1;\n  }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "copy_array": {
+    "spec": "method copy_array(s: seq<int>) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s|\n  ensures forall k :: 0 <= k < |s| ==> res[k] == s[k]\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method copy_array(s: seq<int>) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s|\n  ensures forall k :: 0 <= k < |s| ==> res[k] == s[k]\n  // post-conditions-end\n{\n  res := s;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method copy_array(s: seq<int>) returns (res: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s|\n  ensures forall k :: 0 <= k < |s| ==> res[k] == s[k]\n  // post-conditions-end\n{\n  res := s;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "count_elements": {
+    "spec": "function count(s: seq<int>, x: int): nat\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] == x then 1 else 0) + count(s[1..], x)\n}\n// pure-end\n\nmethod count_elements(s: seq<int>, x: int) returns (c: nat)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures c == count(s, x)\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function count(s: seq<int>, x: int): nat\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] == x then 1 else 0) + count(s[1..], x)\n}\n// pure-end\n\nmethod count_elements(s: seq<int>, x: int) returns (c: nat)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures c == count(s, x)\n  // post-conditions-end\n{\n  c := count(s, x);\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function count(s: seq<int>, x: int): nat\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] == x then 1 else 0) + count(s[1..], x)\n}\n// pure-end\n\nmethod count_elements(s: seq<int>, x: int) returns (c: nat)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures c == count(s, x)\n  // post-conditions-end\n{\n  c := count(s, x);\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "sum_positive": {
+    "spec": "function sum_pos(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] > 0 then s[0] else 0) + sum_pos(s[1..])\n}\n// pure-end\n\nmethod sum_positive(s: seq<int>) returns (total: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures total == sum_pos(s)\n  ensures total >= 0\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function sum_pos(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] > 0 then s[0] else 0) + sum_pos(s[1..])\n}\n\nlemma sum_pos_nonneg(s: seq<int>) ensures sum_pos(s) >= 0\n{\n  if |s| == 0 {}\n  else {\n    sum_pos_nonneg(s[1..]);\n  }\n}\n\nmethod sum_positive(s: seq<int>) returns (total: int)\n  ensures total == sum_pos(s)\n  ensures total >= 0\n{\n  sum_pos_nonneg(s);\n  total := sum_pos(s);\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function sum_pos(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 0\n  else (if s[0] > 0 then s[0] else 0) + sum_pos(s[1..])\n}\n\nlemma sum_pos_nonneg(s: seq<int>) ensures sum_pos(s) >= 0\n{\n  if |s| == 0 {}\n  else {\n    sum_pos_nonneg(s[1..]);\n  }\n}\n\nmethod sum_positive(s: seq<int>) returns (total: int)\n  ensures total == sum_pos(s)\n  ensures total >= 0\n{\n  sum_pos_nonneg(s);\n  total := sum_pos(s);\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "product_of_array": {
+    "spec": "function prod(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 1\n  else s[0] * prod(s[1..])\n}\n// pure-end\n\nmethod product_of_array(s: seq<int>) returns (p: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures p == prod(s)\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function prod(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 1\n  else s[0] * prod(s[1..])\n}\n// pure-end\n\nmethod product_of_array(s: seq<int>) returns (p: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures p == prod(s)\n  // post-conditions-end\n{\n  p := prod(s);\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function prod(s: seq<int>): int\n  decreases |s|\n{\n  if |s| == 0 then 1\n  else s[0] * prod(s[1..])\n}\n// pure-end\n\nmethod product_of_array(s: seq<int>) returns (p: int)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures p == prod(s)\n  // post-conditions-end\n{\n  p := prod(s);\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "all_unique": {
+    "spec": "method all_unique(s: seq<int>) returns (unique: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures unique <==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "method all_unique(s: seq<int>) returns (unique: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures unique <==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall a, b :: 0 <= a < i && a < b < |s| ==> s[a] != s[b]\n    decreases |s| - i\n  {\n    var j := i + 1;\n    while j < |s|\n      invariant i < j <= |s|\n      invariant forall b :: i < b < j ==> s[i] != s[b]\n      decreases |s| - j\n    {\n      if s[i] == s[j] {\n        unique := false;\n        assert 0 <= i < j < |s| && s[i] == s[j];\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  unique := true;\n  return;\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "method all_unique(s: seq<int>) returns (unique: bool)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures unique <==> forall i, j :: 0 <= i < j < |s| ==> s[i] != s[j]\n  // post-conditions-end\n{\n  var i := 0;\n  while i < |s|\n    invariant 0 <= i <= |s|\n    invariant forall a, b :: 0 <= a < i && a < b < |s| ==> s[a] != s[b]\n    decreases |s| - i\n  {\n    var j := i + 1;\n    while j < |s|\n      invariant i < j <= |s|\n      invariant forall b :: i < b < j ==> s[i] != s[b]\n      decreases |s| - j\n    {\n      if s[i] == s[j] {\n        unique := false;\n        assert 0 <= i < j < |s| && s[i] == s[j];\n        return;\n      }\n      j := j + 1;\n    }\n    i := i + 1;\n  }\n  unique := true;\n  return;\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "matrix_row_sum": {
+    "spec": "function row_sum(r: seq<int>): int\n  decreases |r|\n{\n  if |r| == 0 then 0\n  else r[0] + row_sum(r[1..])\n}\n// pure-end\n\nmethod matrix_row_sum(m: seq<seq<int>>) returns (sums: seq<int>)\n  // pre-conditions-start\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |sums| == |m|\n  ensures forall i :: 0 <= i < |m| ==> sums[i] == row_sum(m[i])\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function row_sum(r: seq<int>): int\n  decreases |r|\n{\n  if |r| == 0 then 0\n  else r[0] + row_sum(r[1..])\n}\n\nmethod matrix_row_sum(m: seq<seq<int>>) returns (sums: seq<int>)\n  ensures |sums| == |m|\n  ensures forall i :: 0 <= i < |m| ==> sums[i] == row_sum(m[i])\n{\n  sums := [];\n  var i := 0;\n  while i < |m|\n    invariant 0 <= i <= |m|\n    invariant |sums| == i\n    invariant forall k :: 0 <= k < i ==> sums[k] == row_sum(m[k])\n    decreases |m| - i\n  {\n    sums := sums + [row_sum(m[i])];\n    i := i + 1;\n  }\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function row_sum(r: seq<int>): int\n  decreases |r|\n{\n  if |r| == 0 then 0\n  else r[0] + row_sum(r[1..])\n}\n\nmethod matrix_row_sum(m: seq<seq<int>>) returns (sums: seq<int>)\n  ensures |sums| == |m|\n  ensures forall i :: 0 <= i < |m| ==> sums[i] == row_sum(m[i])\n{\n  sums := [];\n  var i := 0;\n  while i < |m|\n    invariant 0 <= i <= |m|\n    invariant |sums| == i\n    invariant forall k :: 0 <= k < i ==> sums[k] == row_sum(m[k])\n    decreases |m| - i\n  {\n    sums := sums + [row_sum(m[i])];\n    i := i + 1;\n  }\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "matrix_diagonal_sum": {
+    "spec": "function diag_sum(m: seq<seq<int>>, k: nat): int\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  requires k <= |m|\n  decreases k\n{\n  if k == 0 then 0\n  else diag_sum(m, k - 1) + m[k - 1][k - 1]\n}\n// pure-end\n\nmethod matrix_diagonal_sum(m: seq<seq<int>>) returns (sum: int)\n  // pre-conditions-start\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sum == diag_sum(m, |m|)\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": true,
+    "total_iterations": 1,
+    "final_code": "function diag_sum(m: seq<seq<int>>, k: nat): int\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  requires k <= |m|\n  decreases k\n{\n  if k == 0 then 0\n  else diag_sum(m, k - 1) + m[k - 1][k - 1]\n}\n// pure-end\n\nmethod matrix_diagonal_sum(m: seq<seq<int>>) returns (sum: int)\n  // pre-conditions-start\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sum == diag_sum(m, |m|)\n  // post-conditions-end\n{\n  sum := diag_sum(m, |m|);\n}",
+    "failure_reason": "",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "function diag_sum(m: seq<seq<int>>, k: nat): int\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  requires k <= |m|\n  decreases k\n{\n  if k == 0 then 0\n  else diag_sum(m, k - 1) + m[k - 1][k - 1]\n}\n// pure-end\n\nmethod matrix_diagonal_sum(m: seq<seq<int>>) returns (sum: int)\n  // pre-conditions-start\n  requires forall i :: 0 <= i < |m| ==> |m[i]| == |m|\n  // pre-conditions-end\n  // post-conditions-start\n  ensures sum == diag_sum(m, |m|)\n  // post-conditions-end\n{\n  sum := diag_sum(m, |m|);\n}",
+        "is_spec_valid": true,
+        "is_verified": true,
+        "error_taxonomy": "None",
+        "error_message": "",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  },
+  "sorted_insert": {
+    "spec": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n// pure-end\n\nmethod sorted_insert(s: seq<int>, x: int) returns (res: seq<int>)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s| + 1\n  ensures multiset(res) == multiset(s) + multiset{x}\n  ensures is_sorted(res)\n  // post-conditions-end\n{\n  // impl-start\n  // Thân hàm để trống cho LLM tự sinh mã thuật toán\n  // impl-end\n}\n",
+    "is_success": false,
+    "total_iterations": 3,
+    "final_code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n\n// pure-end\n\nmethod sorted_insert(s: seq<int>, x: int) returns (res: seq<int>)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s| + 1\n  ensures multiset(res) == multiset(s) + multiset{x\n}\n  ensures is_sorted(res)\n  // post-conditions-end\n{\n  lemma insert_len(x: int, s: seq<int>) {\n    ensures |s + [x]| == |s| + 1\n  }\n\n  lemma insert_multiset(x: int, s: seq<int>) {\n    ensures multiset(s + [x]) == multiset(s) + multiset{x}\n  }\n\n  lemma insert_sorted(x: int, s: seq<int>) {\n    ensures is_sorted(s + [x])\n  }\n\n  var i: int := 0;\n  while (i < |s|) decreases |s| - i\n        invariant 0 <= i <= |s|\n    {if (s[i] <= x) {\n      i := i + 1;\n    } else {\n      break;\n    }\n  }\n\n  res := s[..i] + [x] + s[i..];\n}",
+    "failure_reason": "Không thể chứng minh tính đúng đắn sau 3 vòng lặp.",
+    "history": [
+      {
+        "iteration": 1,
+        "code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n// pure-end\n\nmethod sorted_insert(s: seq<int>, x: int) returns (res: seq<int>)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s| + 1\n  ensures multiset(res) == multiset(s) + multiset{x\n}\n  ensures is_sorted(res)\n  // post-conditions-end\n{\n  insert_len(x, s);\n  insert_multiset(x, s);\n  insert_sorted(x, s);\n  res := insert(x, s);\n}",
+        "is_spec_valid": true,
+        "is_verified": false,
+        "error_taxonomy": "GeneralVerificationFailure",
+        "error_message": "[GeneralVerificationFailure] tại Dòng 17, Cột 2: unresolved identifier: insert_len\n-> Dòng mã vi phạm: `insert_len(x, s);`\n-> Hướng dẫn khắc phục: LỖI HÀM HOẶC BỔ ĐỀ CHƯA ĐƯỢC ĐỊNH NGHĨA (UNRESOLVED IDENTIFIER): `insert_len`.\n[HÀNH ĐỘNG BẮT BUỘC]:\nHàm hoặc bổ đề `insert_len` được gọi nhưng chưa có định nghĩa trong mã nguồn.\n-> BẮT BUỘC định nghĩa hàm/bổ đề `insert_len` (ví dụ: `lemma insert_len(...) { ... }`) ở đầu file trước khi gọi.",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      },
+      {
+        "iteration": 2,
+        "code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n\n// pure-end\n\nmethod sorted_insert(s: seq<int>, x: int) returns (res: seq<int>)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s| + 1\n  ensures multiset(res) == multiset(s) + multiset{x\n}\n  ensures is_sorted(res)\n  // post-conditions-end\n{\n  lemma insert_len(x: int, s: seq<int>) {\n    ensures |s + [x]| == |s| + 1\n  }\n\n  lemma insert_multiset(x: int, s: seq<int>) {\n    ensures multiset(s + [x]) == multiset(s) + multiset{x}\n  }\n\n  lemma insert_sorted(x: int, s: seq<int>) {\n    ensures is_sorted(s + [x])\n  }\n\n  var i: int := 0;\n  while (i < |s|) decreases |s| - i\n  {\n    if (s[i] <= x) {\n      i := i + 1;\n    } else {\n      break;\n    }\n  }\n\n  res := s[..i] + [x] + s[i..];\n}",
+        "is_spec_valid": true,
+        "is_verified": false,
+        "error_taxonomy": "GeneralVerificationFailure",
+        "error_message": "[GeneralVerificationFailure] tại Dòng 18, Cột 2: rbrace expected\n-> Dòng mã vi phạm: `lemma insert_len(x: int, s: seq<int>) {`\n-> Hướng dẫn khắc phục: Hãy kiểm tra kỹ thông báo lỗi và đảm bảo mã nguồn tuân thủ chặt chẽ cú pháp và ngữ nghĩa Dafny.",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      },
+      {
+        "iteration": 3,
+        "code": "predicate is_sorted(s: seq<int>) {\n  forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n}\n\n// pure-end\n\nmethod sorted_insert(s: seq<int>, x: int) returns (res: seq<int>)\n  // pre-conditions-start\n  requires is_sorted(s)\n  // pre-conditions-end\n  // post-conditions-start\n  ensures |res| == |s| + 1\n  ensures multiset(res) == multiset(s) + multiset{x\n}\n  ensures is_sorted(res)\n  // post-conditions-end\n{\n  lemma insert_len(x: int, s: seq<int>) {\n    ensures |s + [x]| == |s| + 1\n  }\n\n  lemma insert_multiset(x: int, s: seq<int>) {\n    ensures multiset(s + [x]) == multiset(s) + multiset{x}\n  }\n\n  lemma insert_sorted(x: int, s: seq<int>) {\n    ensures is_sorted(s + [x])\n  }\n\n  var i: int := 0;\n  while (i < |s|) decreases |s| - i\n        invariant 0 <= i <= |s|\n    {if (s[i] <= x) {\n      i := i + 1;\n    } else {\n      break;\n    }\n  }\n\n  res := s[..i] + [x] + s[i..];\n}",
+        "is_spec_valid": true,
+        "is_verified": false,
+        "error_taxonomy": "GeneralVerificationFailure",
+        "error_message": "[GeneralVerificationFailure] tại Dòng 18, Cột 2: rbrace expected\n-> Dòng mã vi phạm: `lemma insert_len(x: int, s: seq<int>) {`\n-> Hướng dẫn khắc phục: Hãy kiểm tra kỹ thông báo lỗi và đảm bảo mã nguồn tuân thủ chặt chẽ cú pháp và ngữ nghĩa Dafny.",
+        "cot_trace": "",
+        "cot_tokens": 0,
+        "counterexample_desc": "",
+        "has_cegar": false
+      }
+    ]
+  }
+}

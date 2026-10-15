@@ -157,8 +157,8 @@ def render_metrics_tab(
     # BẢNG ĐỐI CHUẨN ABLATION STUDY: STANFORD CLOVER (2024) VS OUR SYSTEM
     # ======================================================================
     st.markdown("---")
-    st.markdown("#### 🔬 Đối Chuẩn Ablation Study: Stanford Clover (2024) vs. Hệ Thống Đề Xuất")
-    st.caption("Thực nghiệm bóc tách chứng minh đóng góp của các trụ cột Neuro-Symbolic (Topology, Normalizer, Spec-Locker, CEGAR) so với phương pháp gốc của Stanford Clover.")
+    st.markdown("#### 🔬 Đối Chuẩn Ablation Study: Baseline Nội Bộ (Clover-inspired) vs. Hệ Thống Đề Xuất")
+    st.caption("Thực nghiệm bóc tách chứng minh đóng góp của các trụ cột Neuro-Symbolic (Topology, Normalizer, Spec-Locker, CEGAR) so với phương thức prompt trực diện kiểu Clover.")
 
     import os
     import json
@@ -186,7 +186,7 @@ def render_metrics_tab(
                 options=model_keys,
                 index=cur_idx,
                 format_func=lambda x: next((m[1] for m in available_models if m[0] == x), x),
-                help="Chọn mô hình LLM làm biến chuẩn để so tài giữa Stanford Clover Baseline và Hệ Thống Đề Xuất."
+                help="Chọn mô hình LLM làm biến chuẩn để so tài giữa Baseline nội bộ (Clover-inspired) và Hệ Thống Đề Xuất."
             )
         with col_c2:
             preset_options = [
@@ -280,13 +280,13 @@ def render_metrics_tab(
 
     df_ablation = pd.DataFrame([
         {
-            "Phương Pháp": "Stanford Clover (2024) Baseline",
+            "Phương Pháp": "Cấu hình Baseline nội bộ (Clover-inspired)*",
             "Pass@1 (%)": f"{clover_data.get('pass_at_1_rate', 0.0)}%",
             "Pass@3 (%)": f"{clover_data.get('pass_at_k_rate', 0.0)}%",
             "Vi Phạm Đặc Tả H1 (%)": f"{clover_data.get('spec_tampering_rate', 0.0)}%",
             "Vòng Sửa Lỗi TB": clover_data.get('avg_repair_loops', 0.0),
             "Thời Gian TB (s)": clover_data.get('avg_duration_sec', 0.0),
-            "Cứu Bằng CEGAR": "-"
+            "Tự Sửa Nhờ Phản Hồi Dafny": "-"
         },
         {
             "Phương Pháp": "🏆 Hệ Thống Đề Xuất (Our System)",
@@ -295,10 +295,11 @@ def render_metrics_tab(
             "Vi Phạm Đặc Tả H1 (%)": f"{our_data.get('spec_tampering_rate', 0.0)}%",
             "Vòng Sửa Lỗi TB": our_data.get('avg_repair_loops', 0.0),
             "Thời Gian TB (s)": our_data.get('avg_duration_sec', 0.0),
-            "Cứu Bằng CEGAR": f"{our_data.get('cegar_repaired_count', 0)} bài"
+            "Tự Sửa Nhờ Phản Hồi Dafny": f"{our_data.get('cegar_repaired_count', 0)} bài"
         }
     ])
     st.dataframe(df_ablation, width="stretch", hide_index=True)
+    st.caption("(*) Cấu hình Baseline nội bộ mô phỏng quy trình prompt trực diện khi tắt 4 trụ cột kỹ thuật của hệ thống trên cùng hạ tầng cục bộ.")
 
     # Sinh mã LaTeX chuẩn bài báo
     latex_code = LaTeXExporter.generate_clover_comparison_table(

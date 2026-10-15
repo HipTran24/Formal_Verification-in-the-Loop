@@ -1,28 +1,28 @@
 {
-  "timestamp": "2026-10-05 17:36:58",
+  "timestamp": "2026-10-15 14:34:40",
   "model_name": "ollama/qwen2.5-coder:7b",
-  "preset": "clover",
-  "total_tasks": 6,
+  "preset": "core30",
+  "total_tasks": 30,
   "clover_baseline": {
     "method_name": "Stanford Clover Baseline (2024)",
-    "total_tasks": 6,
-    "passed_tasks": 5,
-    "pass_at_1_count": 4,
-    "pass_at_1_rate": 66.7,
-    "pass_at_k_count": 5,
-    "pass_at_k_rate": 83.3,
-    "spec_tampering_count": 0,
-    "spec_tampering_rate": 0.0,
+    "total_tasks": 30,
+    "passed_tasks": 6,
+    "pass_at_1_count": 5,
+    "pass_at_1_rate": 16.7,
+    "pass_at_k_count": 6,
+    "pass_at_k_rate": 20.0,
+    "spec_tampering_count": 1,
+    "spec_tampering_rate": 3.3,
     "cegar_repaired_count": 0,
-    "avg_repair_loops": 1.5,
-    "avg_duration_sec": 39.8,
-    "total_duration_sec": 238.6,
+    "avg_repair_loops": 2.63,
+    "avg_duration_sec": 214.5,
+    "total_duration_sec": 6436.2,
     "details": [
       {
         "task_name": "abs_val",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 30.18,
+        "elapsed_sec": 59.8,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -30,7 +30,7 @@
         "task_name": "find_min",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 9.43,
+        "elapsed_sec": 16.43,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -38,7 +38,7 @@
         "task_name": "linear_search",
         "is_success": false,
         "total_iterations": 3,
-        "elapsed_sec": 117.28,
+        "elapsed_sec": 209.4,
         "pass_at_1": false,
         "has_tamper": false
       },
@@ -46,7 +46,7 @@
         "task_name": "sample_max",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 11.69,
+        "elapsed_sec": 16.18,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -54,15 +54,207 @@
         "task_name": "sign_function",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 16.8,
+        "elapsed_sec": 21.81,
         "pass_at_1": true,
         "has_tamper": false
       },
       {
         "task_name": "sum_to_n",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 152.79,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "002-truncate",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 108.75,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "013-greatest_common_divisor",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 137.56,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "031-is-prime",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 217.25,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "035-max-element",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 220.76,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "052-below-threshold",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 192.9,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "055-fib",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 268.6,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "000-has_close_elements",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 334.0,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "010-is_palindrome",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 402.08,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "077-iscube",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 543.03,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "088-sort_array",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 696.1,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "binary_search",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 298.15,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "linear_search_last",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 205.96,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "find_first_negative",
         "is_success": true,
         "total_iterations": 2,
-        "elapsed_sec": 53.24,
+        "elapsed_sec": 138.89,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "array_reverse",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 149.83,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "is_array_sorted",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 211.88,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "remove_element",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 197.1,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "copy_array",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 189.76,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "count_elements",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 224.16,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "sum_positive",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 229.38,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "product_of_array",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 224.2,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "all_unique",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 225.18,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "matrix_row_sum",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 320.86,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "matrix_diagonal_sum",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 29.81,
+        "pass_at_1": true,
+        "has_tamper": true
+      },
+      {
+        "task_name": "sorted_insert",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 193.64,
         "pass_at_1": false,
         "has_tamper": false
       }
@@ -70,24 +262,24 @@
   },
   "our_system": {
     "method_name": "Our System (Full Neuro-Symbolic)",
-    "total_tasks": 6,
-    "passed_tasks": 6,
-    "pass_at_1_count": 5,
-    "pass_at_1_rate": 83.3,
-    "pass_at_k_count": 6,
-    "pass_at_k_rate": 100.0,
+    "total_tasks": 30,
+    "passed_tasks": 29,
+    "pass_at_1_count": 28,
+    "pass_at_1_rate": 93.3,
+    "pass_at_k_count": 29,
+    "pass_at_k_rate": 96.7,
     "spec_tampering_count": 0,
     "spec_tampering_rate": 0.0,
     "cegar_repaired_count": 1,
-    "avg_repair_loops": 1.17,
-    "avg_duration_sec": 19.1,
-    "total_duration_sec": 114.6,
+    "avg_repair_loops": 1.1,
+    "avg_duration_sec": 60.8,
+    "total_duration_sec": 1825.2,
     "details": [
       {
         "task_name": "abs_val",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 11.99,
+        "elapsed_sec": 19.83,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -95,7 +287,7 @@
         "task_name": "find_min",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 10.94,
+        "elapsed_sec": 18.07,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -103,7 +295,7 @@
         "task_name": "linear_search",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 23.3,
+        "elapsed_sec": 42.95,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -111,7 +303,7 @@
         "task_name": "sample_max",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 11.76,
+        "elapsed_sec": 18.22,
         "pass_at_1": true,
         "has_tamper": false
       },
@@ -119,19 +311,211 @@
         "task_name": "sign_function",
         "is_success": true,
         "total_iterations": 1,
-        "elapsed_sec": 15.84,
+        "elapsed_sec": 23.34,
         "pass_at_1": true,
         "has_tamper": false
       },
       {
         "task_name": "sum_to_n",
         "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 37.84,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "002-truncate",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 19.77,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "013-greatest_common_divisor",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 38.19,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "031-is-prime",
+        "is_success": true,
         "total_iterations": 2,
-        "elapsed_sec": 40.73,
+        "elapsed_sec": 160.43,
+        "pass_at_1": false,
+        "has_tamper": false
+      },
+      {
+        "task_name": "035-max-element",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 49.5,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "052-below-threshold",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 43.93,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "055-fib",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 47.99,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "000-has_close_elements",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 80.9,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "010-is_palindrome",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 97.39,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "077-iscube",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 70.48,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "088-sort_array",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 150.13,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "binary_search",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 52.81,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "linear_search_last",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 49.91,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "find_first_negative",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 49.66,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "array_reverse",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 42.06,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "is_array_sorted",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 76.43,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "remove_element",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 43.56,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "copy_array",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 28.04,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "count_elements",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 27.31,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "sum_positive",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 41.26,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "product_of_array",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 32.93,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "all_unique",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 77.99,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "matrix_row_sum",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 51.6,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "matrix_diagonal_sum",
+        "is_success": true,
+        "total_iterations": 1,
+        "elapsed_sec": 49.53,
+        "pass_at_1": true,
+        "has_tamper": false
+      },
+      {
+        "task_name": "sorted_insert",
+        "is_success": false,
+        "total_iterations": 3,
+        "elapsed_sec": 283.11,
         "pass_at_1": false,
         "has_tamper": false
       }
     ]
   },
-  "latex_table": "\\begin{table}[htbp]\n\\centering\n\\caption{Ablation Study: Stanford Clover vs. Our System (6 Tasks, ollama/qwen2.5-coder:7b)}\n\\label{tab:clover_comparison}\n\\begin{tabular}{lcccccc}\n\\toprule\n\\textbf{Method / Framework} & \\textbf{Tasks} & \\textbf{Pass@1} & \\textbf{Pass@3} & \\textbf{Spec-Tamper ($H_1$)} & \\textbf{Avg Loops} & \\textbf{$T_{avg}$ (s)} \\\\\n\\midrule\nStanford Clover (2024) Baseline & 6 & 66.7\\% & 83.3\\% & 0.0\\% & 1.50 & 39.8 \\\\\n\\textbf{Our System (Neuro-Symbolic)} & 6 & \\textbf{83.3\\%} & \\textbf{100.0\\%} & \\textbf{0.0\\%} & \\textbf{1.17} & \\textbf{19.1} \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}"
+  "latex_table": "\\begin{table}[htbp]\n\\centering\n\\caption{Ablation Study: Stanford Clover vs. Our System (30 Tasks, ollama/qwen2.5-coder:7b)}\n\\label{tab:clover_comparison}\n\\begin{tabular}{lcccccc}\n\\toprule\n\\textbf{Method / Framework} & \\textbf{Tasks} & \\textbf{Pass@1} & \\textbf{Pass@3} & \\textbf{Spec-Tamper ($H_1$)} & \\textbf{Avg Loops} & \\textbf{$T_{avg}$ (s)} \\\\\n\\midrule\nStanford Clover (2024) Baseline & 30 & 16.7\\% & 20.0\\% & 3.3\\% & 2.63 & 214.5 \\\\\n\\textbf{Our System (Neuro-Symbolic)} & 30 & \\textbf{93.3\\%} & \\textbf{96.7\\%} & \\textbf{0.0\\%} & \\textbf{1.10} & \\textbf{60.8} \\\\\n\\bottomrule\n\\end{tabular}\n\\end{table}"
 }

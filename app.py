@@ -503,6 +503,7 @@ with st.sidebar:
             advanced_total = len(advanced_tasks)
             inductive_total = len(inductive_tasks)
             target_total = len(target_tasks)
+            core30_total = clover_total + humaneval_total + advanced_total
             all_total = len(flat_registry)
 
             # Mặc định ban đầu: KHÔNG chọn bài nào cả (False)
@@ -513,6 +514,7 @@ with st.sidebar:
 
             preset_options = [
                 "--- Bấm để sổ xuống chọn bộ ---",
+                f"🎯 Bộ Cốt Lõi 30 bài ({core30_total} bài)",
                 f"🔥 Bộ chuẩn 100% ({target_total} bài)",
                 f"🍀 Bộ Clover ({clover_total} bài)",
                 f"🧪 Bộ HumanEval ({humaneval_total} bài)",
@@ -532,7 +534,10 @@ with st.sidebar:
 
             if preset_choice != st.session_state.get("current_preset_applied", "--- Bấm để sổ xuống chọn bộ ---"):
                 st.session_state["current_preset_applied"] = preset_choice
-                if "Bộ chuẩn 100%" in preset_choice:
+                if "Bộ Cốt Lõi 30 bài" in preset_choice:
+                    for _item_key, meta in flat_registry.items():
+                        st.session_state[f"chk_task_{meta['short_name']}"] = (meta["group"] != "Inductive")
+                elif "Bộ chuẩn 100%" in preset_choice:
                     for _item_key, meta in flat_registry.items():
                         st.session_state[f"chk_task_{meta['short_name']}"] = meta["is_target"]
                 elif "Bộ Clover" in preset_choice:

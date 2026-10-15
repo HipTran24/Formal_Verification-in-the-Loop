@@ -147,6 +147,8 @@ def get_preset_labels(preset_type: str = "target_12") -> List[str]:
         return [k for k, v in registry.items() if v["group"] == "Advanced"]
     elif preset_type == "inductive":
         return [k for k, v in registry.items() if v["group"] == "Inductive"]
+    elif preset_type == "core30":
+        return [k for k, v in registry.items() if v["group"] != "Inductive"]
     elif preset_type == "all":
         return list(registry.keys())
     return []

@@ -802,5 +802,419 @@
     "return_code": 0,
     "output": "\nDafny program verifier finished with 3 verified, 0 errors\n",
     "error_summary": ""
+  },
+  "7a9ee633da47f1c0eb199234278386e957a04650a013f955e9bd44c2283728b1": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 1 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "c2edd6f0bee1df2aec3cb7f8d50bd11651c36b83276339df39f2d0272c125c88": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 1 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "e31e197dbcfc5464c2a9ec928261d5255e36191d6390cbf25fba9562b220e2fc": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(2,25): Related location: this is the postcondition that could not be proved\n  |\n2 |     ensures r >= 0 ==> r < a.Length && a[r] == target\n  |                          ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(2,44): Related location: this is the postcondition that could not be proved\n  |\n2 |     ensures r >= 0 ==> r < a.Length && a[r] == target\n  |                                             ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(3,24): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures r == -1 ==> forall i :: 0 <= i < a.Length ==> a[i] != target\n  |                         ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpiispyu5m.dfy(20,0): Error: out-parameter 'r', which is subject to definite-assignment rules, might be uninitialized at this return point\n   |\n20 | }\n   | ^\n\n\nDafny program verifier finished with 1 verified, 4 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "6a9b5d43cc12ea35ad9f6e412e438f2d18558803e7a3b411b5921b0724e8e62b": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpk5t2tp6c.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpk5t2tp6c.dfy(3,24): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures r == -1 ==> forall i :: 0 <= i < a.Length ==> a[i] != target\n  |                         ^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "3b1000ab43d96f77847c4c15549ddbcdc81a1797bc2ad1e8f026fefaa7d6fb8f": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpeyge8_tb.dfy(9,46): Error: index out of range\n  |\n9 |         invariant forall j :: 0 <= j < i ==> a[j] != target\n  |                                               ^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "e9ed51813efedf9ec59ca65e2693ba2f6055bf3fc8973a569e02fb1fcf101cf8": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 1 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "a5a4cef6d57d79616423b8343982891eb28df6169fff1a170d87703ce7ce5abe": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 1 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "596303cdc6b3c857f49fd857f2722d7d5bd0b02df5ab9af7b5929d6cb708b65c": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmppzvpizm2.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmppzvpizm2.dfy(3,14): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures s == n * (n + 1) / 2\n  |               ^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "15609fa7df61b21ebc01978c8882ba05d932614f48b49cf925640a8a58c92b33": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpu4ve_8h6.dfy(10,8): Error: rbrace expected\n   |\n10 |         invariant s == i * (i - 1) / 2;\n   |         ^\n\n1 parse errors detected in tmpu4ve_8h6.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "4296dcdff8b065e6ac39de2e24e13c0019321369ec01881bb5b99f86f1d70f56": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpm6642aea.dfy(6,8): Error: Duplicate local-variable name: d\n  |\n6 |     var d := x - (x.Floor as real);\n  |         ^\n\n1 resolution/type errors detected in tmpm6642aea.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "b571e0979de09a185e0a16e0450801c6753e67d07ef4687cf0ef2689cc8b3fec": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpqo3asqh5.dfy(12,8): Error: rbrace expected\n   |\n12 |         invariant (0.0 <= d <= 1.0);\n   |         ^\n\n1 parse errors detected in tmpqo3asqh5.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "9cb0002f943cae622018612219132fd91ae18e5f8f268b7ea7c3e86bb0563f31": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpdcx0g4uo.dfy(8,8): Error: rbrace expected\n  |\n8 |         invariant (0.0 <= d <= 1.0);\n  |         ^\n\n1 parse errors detected in tmpdcx0g4uo.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "fde4af42befeeca732fbd39ef41b9aed3c906b9ad886a92837a3d533104a4287": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpmdknbh1k.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpmdknbh1k.dfy(3,16): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures gcd != 0\n  |                 ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpmdknbh1k.dfy(7,4): Error: decreases expression might not decrease\n  |\n7 |     while cur_b != 0\n  |     ^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpmdknbh1k.dfy(8,24): Error: decreases expression must be bounded below by 0 at end of loop iteration\n  |\n8 |         decreases cur_a - cur_b\n  |                         ^\n\n\nDafny program verifier finished with 0 verified, 3 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "70ebca271b5e1bd896a26237347a863763b75af3e64daec0a080e2adb712541d": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp22a4tuqi.dfy(4,0): Error: a postcondition could not be proved on this return path\n  |\n4 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp22a4tuqi.dfy(3,16): Related location: this is the postcondition that could not be proved\n  |\n3 |     ensures gcd != 0\n  |                 ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp22a4tuqi.dfy(7,4): Error: decreases expression might not decrease\n  |\n7 |     while cur_b != 0\n  |     ^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp22a4tuqi.dfy(8,24): Error: decreases expression must be bounded below by 0 at end of loop iteration\n  |\n8 |         decreases cur_a + cur_b\n  |                         ^\n\n\nDafny program verifier finished with 0 verified, 3 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "16d40b65171fb32e3d2e4d3cb7900441e7d01759c733a75b33542bf42e58a837": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpx16nm0dx.dfy(6,6): Error: Duplicate local-variable name: result\n  |\n6 |   var result := true;\n  |       ^^^^^^\n\n1 resolution/type errors detected in tmpx16nm0dx.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "91dea0ae566a45254c416cc1be0cc173cb77cf9341754e0ccaeedaad667c8576": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp1rzgyolv.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp1rzgyolv.dfy(3,21): Related location: this is the postcondition that could not be proved\n  |\n3 |   ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  |                      ^^^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "50338d3f40ca69d643655ab3fd77d3e346621865d449b14733f232030a018e21": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp3jraukvh.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp3jraukvh.dfy(3,21): Related location: this is the postcondition that could not be proved\n  |\n3 |   ensures result ==> forall i :: 2 <= i < k ==> k % i != 0\n  |                      ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp3jraukvh.dfy(13,16): Error: variable 'result', which is subject to definite-assignment rules, might be uninitialized here\n   |\n13 |       invariant result ==> forall j :: 2 <= j < i ==> k % j != 0\n   |                 ^^^^^^\n\n\nDafny program verifier finished with 1 verified, 2 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "09efc3aae24bcc1ce441403b26140c922deb475d9c6cda7063dcd52cb24e757d": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmps5v7rmov.dfy(10,8): Error: rbrace expected\n   |\n10 |         invariant 0 <= i <= |l|;\n   |         ^\n\n1 parse errors detected in tmps5v7rmov.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "2300fb87bffeb01b2e697cba43c1ea3a403ed510788a6c3de8f0e8f578d1feb4": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp8pkt8yz3.dfy(10,8): Error: rbrace expected\n   |\n10 |         invariant 0 <= i <= |l|;\n   |         ^\n\n1 parse errors detected in tmp8pkt8yz3.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "b0905eda335543486f6e1e6706d7b424dea65309c9225da7d5869901240d110e": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp1xc2s8v5.dfy(10,8): Error: rbrace expected\n   |\n10 |         invariant 0 <= i <= |l|;\n   |         ^\n\n1 parse errors detected in tmp1xc2s8v5.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "c17d259d5225e260b780ce9ca52b54a4f542263773d2c1ea8b8c50edbd67a15a": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp2inbpslz.dfy(10,8): Error: rbrace expected\n   |\n10 |         invariant 0 <= i <= |l|;\n   |         ^\n\n1 parse errors detected in tmp2inbpslz.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "01056ca5ff84154858b5da52ea1dcab6c523607205569d389b1018f6f7562700": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp343ii3pu.dfy(15,12): Error: lbrace expected\n   |\n15 |   if n == 0 then\n   |             ^\n\n1 parse errors detected in tmp343ii3pu.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "24024e385c44c499aafaa19bf454b155cff938bf5701c24f99183e381a851dbb": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmplfokkp43.dfy(15,12): Error: lbrace expected\n   |\n15 |   if n == 0 then\n   |             ^\n\n1 parse errors detected in tmplfokkp43.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "f5abc07f2ea80ba73dc4ddd506fcaa100c22f7b212554591aaeb187b71e95537": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpdtsxak17.dfy(15,12): Error: lbrace expected\n   |\n15 |   if n <= 1 then\n   |             ^\n\n1 parse errors detected in tmpdtsxak17.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "382abac535448c5ac45b7f9e59a643b2f7b99645377b481e4ebef10d051493ff": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpj16dbq5w.dfy(44,8): Error: Duplicate local-variable name: rev\n   |\n44 |     var rev := \"\";\n   |         ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpj16dbq5w.dfy(49,19): Error: type of right argument to + (char) must agree with the result type (seq<char>)\n   |\n49 |         rev := rev + str[n - 1 - i];\n   |                    ^\n\n2 resolution/type errors detected in tmpj16dbq5w.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "de5449c5177a80b1aeddb222330881b9ce182df76c4885536601a9a1aca4a41d": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpcpsaeb5u.dfy(41,8): Error: Duplicate local-variable name: rev\n   |\n41 |     var rev := \"\";\n   |         ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpcpsaeb5u.dfy(47,19): Error: type of right argument to + (char) must agree with the result type (seq<char>)\n   |\n47 |         rev := rev + str[n - 1 - i];\n   |                    ^\n\n2 resolution/type errors detected in tmpcpsaeb5u.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "e395518b312eaf7f3dd94f59e15ecff6e91a58ea958dc5588006274e6c6b44b6": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpiozmgnpl.dfy(33,49): Error: this symbol not expected in MethodSpec\n   |\n33 | method iscube_helper(n: int, low: int, high: int): bool\n   |                                                  ^\n\n1 parse errors detected in tmpiozmgnpl.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "7ca03808bb3c541fbcb62c3a188f345095d0b6e4c59c951da0017bba96765a40": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpgpsj4g7w.dfy(34,49): Error: this symbol not expected in MethodSpec\n   |\n34 | method iscube_helper(n: int, low: int, high: int): bool\n   |                                                  ^\n\n1 parse errors detected in tmpgpsj4g7w.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "9a5204c21ea6b0d3ce3df09c716285fa5f309045e404759302b75032507f6154": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(12,6): Error: Duplicate local-variable name: sorted\n   |\n12 |   var sorted := a;\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(24,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n24 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(25,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n25 |         a[j] := temp;\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(41,13): Error: new can be applied only to class types (got seq<int>)\n   |\n41 |   var rev := new seq<int>(n);\n   |              ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(41,6): Error: Duplicate local-variable name: rev\n   |\n41 |   var rev := new seq<int>(n);\n   |       ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(60,6): Error: Duplicate local-variable name: sorted\n   |\n60 |   var sorted := a;\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(72,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n72 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp6g69z2_p.dfy(73,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n73 |         a[j] := temp;\n   |         ^\n\n8 resolution/type errors detected in tmp6g69z2_p.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "d01a653b76d6f4072d9d7033824e22ab7983e77176d6d043896d08bfd4047905": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(12,16): Error: new can be applied only to class types (got seq<int>)\n   |\n12 |   var sorted := new seq<int>(n);\n   |                 ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(12,6): Error: Duplicate local-variable name: sorted\n   |\n12 |   var sorted := new seq<int>(n);\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(24,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n24 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(25,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n25 |         a[j] := temp;\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(41,13): Error: new can be applied only to class types (got seq<int>)\n   |\n41 |   var rev := new seq<int>(n);\n   |              ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(41,6): Error: Duplicate local-variable name: rev\n   |\n41 |   var rev := new seq<int>(n);\n   |       ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(60,16): Error: new can be applied only to class types (got seq<int>)\n   |\n60 |   var sorted := new seq<int>(n);\n   |                 ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(60,6): Error: Duplicate local-variable name: sorted\n   |\n60 |   var sorted := new seq<int>(n);\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(72,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n72 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpjsdj3sf4.dfy(73,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n73 |         a[j] := temp;\n   |         ^\n\n10 resolution/type errors detected in tmpjsdj3sf4.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "ffcf245fb10ddd4ce25e75f851024d8c6144ada5dd7bb9193b7a15e65b0c78d5": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(12,6): Error: Duplicate local-variable name: sorted\n   |\n12 |   var sorted := new int[n];\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(24,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n24 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(25,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n25 |         a[j] := temp;\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(29,4): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n29 |     sorted[i] := a[i];\n   |     ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(42,6): Error: Duplicate local-variable name: rev\n   |\n42 |   var rev := new int[n];\n   |       ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(47,4): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n47 |     rev[n - 1 - i] := s[i];\n   |     ^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(61,6): Error: Duplicate local-variable name: sorted\n   |\n61 |   var sorted := new int[n];\n   |       ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(73,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n73 |         a[i] := a[j];\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(74,8): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n74 |         a[j] := temp;\n   |         ^\n\nC:/Users/aaa/AppData/Local/Temp/tmplzbk4kmy.dfy(78,4): Error: LHS of array assignment must denote an array element (found seq<int>)\n   |\n78 |     sorted[i] := a[i];\n   |     ^^^^^^\n\n10 resolution/type errors detected in tmplzbk4kmy.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "7e1eeb58e4bbf024b1b18c05ad1d9654988f01e0768fe70d383753a07ac7e84a": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpc_0s0q4s.dfy(31,4): Error: rbrace expected\n   |\n31 |     ensures forall k :: 0 <= k < |s| ==> s[k] != key\n   |     ^\n\n1 parse errors detected in tmpc_0s0q4s.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "293aef9755fd47a038f414f8c4e3f95f508fff87f04e3cee1066d1a464ed597e": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpeaup_494.dfy(31,4): Error: rbrace expected\n   |\n31 |     ensures forall k :: 0 <= k < |s| ==> s[k] != key\n   |     ^\n\n1 parse errors detected in tmpeaup_494.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "466b775c392c3d5d89c268d680b83cddb2762e08c38b2c189f964e5cbbfcaa0c": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(2,13): Related location: this is the postcondition that could not be proved\n  |\n2 |   ensures -1 <= index < |s|\n  |              ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(2,22): Related location: this is the postcondition that could not be proved\n  |\n2 |   ensures -1 <= index < |s|\n  |                       ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(3,34): Related location: this is the postcondition that could not be proved\n  |\n3 |   ensures index >= 0 ==> s[index] == key && (forall k :: index < k < |s| ==> s[k] != key)\n  |                                   ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(3,45): Related location: this is the postcondition that could not be proved\n  |\n3 |   ensures index >= 0 ==> s[index] == key && (forall k :: index < k < |s| ==> s[k] != key)\n  |                                              ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpe_nwulwo.dfy(4,26): Related location: this is the postcondition that could not be proved\n  |\n4 |   ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  |                           ^^^^^^\n\n\nDafny program verifier finished with 1 verified, 5 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "7e75a120536e467a715e4c9a060edec5e7c60ec5f7f3c3a7713416879a1a87a9": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpywf67qs5.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpywf67qs5.dfy(4,26): Related location: this is the postcondition that could not be proved\n  |\n4 |   ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  |                           ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpywf67qs5.dfy(10,26): Error: this invariant could not be proved to be maintained by the loop\n Related message: loop invariant violation\n   |\n10 |     invariant index == -1 || (index >= 0 && s[index] == key && (forall k :: index < k < |s| ==> s[k] != key))\n   |                           ^^\n\n\nDafny program verifier finished with 1 verified, 2 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "6ac635a6435ed0bfc2b71e8067852e91684e16be75d753ef3d0f1cb0c81ad3bd": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(2,22): Related location: this is the postcondition that could not be proved\n  |\n2 |   ensures -1 <= index < |s|\n  |                       ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(4,26): Related location: this is the postcondition that could not be proved\n  |\n4 |   ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] != key\n  |                           ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(10,26): Error: this invariant could not be proved to be maintained by the loop\n Related message: loop invariant violation\n   |\n10 |     invariant index == -1 || (index >= 0 && s[index] == key && (forall k :: index < k < |s| ==> s[k] != key))\n   |                           ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp9i0q6_q8.dfy(10,45): Error: index out of range\n   |\n10 |     invariant index == -1 || (index >= 0 && s[index] == key && (forall k :: index < k < |s| ==> s[k] != key))\n   |                                              ^\n\n\nDafny program verifier finished with 1 verified, 4 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "59481f3322b0a0637ce6c8a8e4d39a674e26fcd835af47b95c817db734df791d": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpry4or3kk.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpry4or3kk.dfy(3,42): Related location: this is the postcondition that could not be proved\n  |\n3 |   ensures index >= 0 ==> s[index] < 0 && (forall k :: 0 <= k < index ==> s[k] >= 0)\n  |                                           ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpry4or3kk.dfy(5,0): Error: a postcondition could not be proved on this return path\n  |\n5 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpry4or3kk.dfy(4,26): Related location: this is the postcondition that could not be proved\n  |\n4 |   ensures index == -1 ==> forall k :: 0 <= k < |s| ==> s[k] >= 0\n  |                           ^^^^^^\n\n\nDafny program verifier finished with 1 verified, 2 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "edda281080e760562448e0942fd7e57a31851ad2e2b6408420b115460cedd75b": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "b27ba0be4973b8ee507b4bd40a95402c189621151ac1789e3239b4712b28519f": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpgn58xr9u.dfy(6,22): Error: openparen expected\n  |\n6 |   var rev := seq<int> |;\n  |                       ^\n\n1 parse errors detected in tmpgn58xr9u.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "7a915972eaa601c7d27e2acc3c3a8750109385ff77565dbc3d49d70acf3364b8": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpzryjxte0.dfy(6,22): Error: openparen expected\n  |\n6 |   var rev := seq<int> |;\n  |                       ^\n\n1 parse errors detected in tmpzryjxte0.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "059565679dae3ccbda490ea662a2367c0fe180ae70cd2df5e2c64144a154167f": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpvegh8esb.dfy(3,0): Error: a postcondition could not be proved on this return path\n  |\n3 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpvegh8esb.dfy(2,17): Related location: this is the postcondition that could not be proved\n  |\n2 |   ensures sorted <==> forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  |                  ^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "0dfd8e30424699e190860aae7fec607f1652cdbbac2cac17217dc4de77682d8e": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpu31_mk17.dfy(3,0): Error: a postcondition could not be proved on this return path\n  |\n3 | {\n  | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpu31_mk17.dfy(2,17): Related location: this is the postcondition that could not be proved\n  |\n2 |   ensures sorted <==> forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  |                  ^^^^\n\n\nDafny program verifier finished with 1 verified, 1 error\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "e2135275e31d7a4e3408123fa8aa235101ab41f2b8aa6d021e800e81155b4633": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpoirs44qa.dfy(12,21): Error: openparen expected\n   |\n12 |   var res := seq<int>[];\n   |                      ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpoirs44qa.dfy(12,23): Error: comma expected\n   |\n12 |   var res := seq<int>[];\n   |                        ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpoirs44qa.dfy(18,25): Error: invalid AssignStatement\n   |\n18 |       res := res[i := j] := s[i];\n   |                          ^\n\n3 parse errors detected in tmpoirs44qa.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "ce5cda0e95855cd23d398a8392b02b921f550ea04ac4a7f2f1e2d4763be5f67e": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp4txsngpq.dfy(12,21): Error: openparen expected\n   |\n12 |   var res := seq<int>[];\n   |                      ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp4txsngpq.dfy(12,23): Error: comma expected\n   |\n12 |   var res := seq<int>[];\n   |                        ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp4txsngpq.dfy(20,20): Error: invalid AssignStatement\n   |\n20 |       res := res[j] := s[i];\n   |                     ^\n\n3 parse errors detected in tmp4txsngpq.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "dc6b62541adfada4c4cb3cbc9dd551db6fe4526ea704470c2e10cdda5b3a968f": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmplow7gmxf.dfy(6,22): Error: openparen expected\n  |\n6 |   var res := seq<int> | [0 .. n - 1] |;\n  |                       ^\n\nC:/Users/aaa/AppData/Local/Temp/tmplow7gmxf.dfy(6,27): Error: rbracket expected\n  |\n6 |   var res := seq<int> | [0 .. n - 1] |;\n  |                            ^\n\n2 parse errors detected in tmplow7gmxf.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "ed5867a4ce8ec7ce4b45e1637bd2cd042fd8ea31a34582e392687cc22eff0b77": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpc_cjaodq.dfy(22,17): Error: lbrace expected\n   |\n22 |     if s[i] == x then\n   |                  ^\n\n1 parse errors detected in tmpc_cjaodq.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "34d07ac031e54579d3a96cf73cb314c1c4a9a05236957da7fcbd718c1c6cff7c": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpheewimio.dfy(21,17): Error: lbrace expected\n   |\n21 |     if s[i] == x then\n   |                  ^\n\n1 parse errors detected in tmpheewimio.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "7edc9150b92ead78380d26dfd904cfc8ea64179dfc82c15440fd469c941a78cb": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpo9o77h56.dfy(17,6): Error: Duplicate local-variable name: total\n   |\n17 |   var total := 0;\n   |       ^^^^^\n\n1 resolution/type errors detected in tmpo9o77h56.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "874ab7c795e02d0515884fd94d4b472d3a79eebcb18659453e4b8d098494591d": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpcsao5f_a.dfy(16,6): Error: Duplicate local-variable name: total\n   |\n16 |   var total := 0;\n   |       ^^^^^\n\n1 resolution/type errors detected in tmpcsao5f_a.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "304ac96696cf94417743b22f2817cc767ea6206dd4716defbec84f742d168c99": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpl5x3lsxy.dfy(16,6): Error: Duplicate local-variable name: p\n   |\n16 |   var p := 1;\n   |       ^\n\n1 resolution/type errors detected in tmpl5x3lsxy.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "fe32b5ba68f8c9993d2367422d7ffb6967630bce225d9886b38b0769316f8dcf": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpwtj14jg2.dfy(15,0): Error: a postcondition could not be proved on this return path\n   |\n15 | {\n   | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpwtj14jg2.dfy(13,12): Related location: this is the postcondition that could not be proved\n   |\n13 |   ensures p == prod(s)\n   |             ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpwtj14jg2.dfy(20,21): Error: this invariant could not be proved to be maintained by the loop\n Related message: loop invariant violation\n   |\n20 |     invariant result == prod(s[0..i])\n   |                      ^^\n\n\nDafny program verifier finished with 1 verified, 2 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "d32cd211e850afa904de2bded80bc3c8dacb01f5507cca87cc4bcea0b7b9b17c": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpnv2mp8sa.dfy(5,6): Error: Duplicate local-variable name: unique\n  |\n5 |   var unique := true;\n  |       ^^^^^^\n\n1 resolution/type errors detected in tmpnv2mp8sa.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "73504750bbd065ed5b075c0a17c1967cebc2af8bf043de935632f1841c748be7": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpxt1ows0y.dfy(5,6): Error: Duplicate local-variable name: unique\n  |\n5 |   var unique := true;\n  |       ^^^^^^\n\n1 resolution/type errors detected in tmpxt1ows0y.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "0c43e4c6803e165952b2be2055e504aa81307baeb4fab4554361ba32f83ce17c": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmplsm367p_.dfy(5,6): Error: Duplicate local-variable name: unique\n  |\n5 |   var unique := true;\n  |       ^^^^^^\n\n1 resolution/type errors detected in tmplsm367p_.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "06b4c22622c8253dc1a0833f41d92aa9675f7fb014e14f882e780b8886c97f47": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmphp4sn34x.dfy(17,23): Error: openparen expected\n   |\n17 |   var sums := seq<int> | m; // Kh?i t?o m?ng k?t qu? v?i c�ng d? d�i v?i m\n   |                        ^\n\nC:/Users/aaa/AppData/Local/Temp/tmphp4sn34x.dfy(17,26): Error: verticalbar expected\n   |\n17 |   var sums := seq<int> | m; // Kh?i t?o m?ng k?t qu? v?i c�ng d? d�i v?i m\n   |                           ^\n\n2 parse errors detected in tmphp4sn34x.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "e5e2a28f049c47d306c4ca9a65520ff6852ededb74eb21dc96c8c8fb9d070b85": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 3 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "7e390aab82c25216f4002489d39140fd50366efd4f08bde2ed8e773bffac204c": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp2e2ambbi.dfy(14,6): Error: Duplicate local-variable name: res\n   |\n14 |   var res := s;\n   |       ^^^\n\n1 resolution/type errors detected in tmp2e2ambbi.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "4494fe11f96b9fba6e18f0689a0f17e17d9b4e6eb1e8b75813866b97877df01e": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpz6usj_ad.dfy(13,6): Error: Duplicate local-variable name: res\n   |\n13 |   var res := s;\n   |       ^^^\n\n1 resolution/type errors detected in tmpz6usj_ad.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "92beb69fcb662da95b9e79df85e62502e818a7629253ab4c54340cf9a8df3c5e": {
+    "is_verified": false,
+    "return_code": 4,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(10,0): Error: a postcondition could not be proved on this return path\n   |\n10 | {\n   | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(7,16): Related location: this is the postcondition that could not be proved\n  |\n7 |   ensures |res| == |s| + 1\n  |                 ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(10,0): Error: a postcondition could not be proved on this return path\n   |\n10 | {\n   | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(8,24): Related location: this is the postcondition that could not be proved\n  |\n8 |   ensures multiset(res) == multiset(s) + multiset{x}\n  |                         ^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(10,0): Error: a postcondition could not be proved on this return path\n   |\n10 | {\n   | ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(9,19): Related location: this is the postcondition that could not be proved\n  |\n9 |   ensures is_sorted(res)\n  |                    ^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(2,2): Related location: this proposition could not be proved\n  |\n2 |   forall i, j :: 0 <= i < j < |s| ==> s[i] <= s[j]\n  |   ^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmp_sp8s24f.dfy(16,28): Error: upper bound below lower bound or above length of sequence\n   |\n16 |     invariant is_sorted(temp[0..i])\n   |                             ^\n\n\nDafny program verifier finished with 1 verified, 4 errors\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "eb54626d51b117c371fcd7eee7fa706f0720b317e596ff609b9af0a6ae453e0b": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "eb0e5467460e42fa25da4177f4dbc4ceb36527811af2b152a5bf4d2dc90ff96d": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "6a6f04563aaa6c8d6c68181a13dbab9442d7b66b98ef4fc822db93b8c938f486": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "91f2ccf23603455f69330de06d13729b1ac43c729714fa2ef5b63b8b879460c4": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "09a3117b8e031d1e0b07fd83010fb20847736bead3eeedd5cef7c1d75fee2077": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 3 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "a3111a953edeb63df6fc06599ddeb43edeff209c28532c4dccdabd457197b96c": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 2 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "9e9ab985ed4b2dddf65544eb32477f0910274bca52bd443c3c4f2995d6e10852": {
+    "is_verified": true,
+    "return_code": 0,
+    "output": "\nDafny program verifier finished with 3 verified, 0 errors\n",
+    "error_summary": ""
+  },
+  "f0eb4c7fb195a38b810b8909c4a9f644983f5bd609ff69d4fc1793ca7ce9247f": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(17,2): Error: unresolved identifier: insert_len\n   |\n17 |   insert_len(x, s);\n   |   ^^^^^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(17,12): Error: expected method call, found expression\n   |\n17 |   insert_len(x, s);\n   |             ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(18,2): Error: unresolved identifier: insert_multiset\n   |\n18 |   insert_multiset(x, s);\n   |   ^^^^^^^^^^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(18,17): Error: expected method call, found expression\n   |\n18 |   insert_multiset(x, s);\n   |                  ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(19,2): Error: unresolved identifier: insert_sorted\n   |\n19 |   insert_sorted(x, s);\n   |   ^^^^^^^^^^^^^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(19,15): Error: expected method call, found expression\n   |\n19 |   insert_sorted(x, s);\n   |                ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpqxf0c_ki.dfy(20,9): Error: unresolved identifier: insert\n   |\n20 |   res := insert(x, s);\n   |          ^^^^^^\n\n7 resolution/type errors detected in tmpqxf0c_ki.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "50b048e39b39ef246391142ed31685bb79be731f04dc9236ebfa7c41b890d4b1": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpylc48vt_.dfy(18,2): Error: rbrace expected\n   |\n18 |   lemma insert_len(x: int, s: seq<int>) {\n   |   ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpylc48vt_.dfy(19,4): Error: rbrace expected\n   |\n19 |     ensures |s + [x]| == |s| + 1\n   |     ^\n\n2 parse errors detected in tmpylc48vt_.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
+  },
+  "fc7dc67960d076931e5d83e9f61b2d6b1e13e1c0c55289aafca0a4209cf60894": {
+    "is_verified": false,
+    "return_code": 2,
+    "output": "C:/Users/aaa/AppData/Local/Temp/tmpumvy_n0r.dfy(18,2): Error: rbrace expected\n   |\n18 |   lemma insert_len(x: int, s: seq<int>) {\n   |   ^\n\nC:/Users/aaa/AppData/Local/Temp/tmpumvy_n0r.dfy(19,4): Error: rbrace expected\n   |\n19 |     ensures |s + [x]| == |s| + 1\n   |     ^\n\n2 parse errors detected in tmpumvy_n0r.dfy\n",
+    "error_summary": "Lỗi kiểm định logic hoặc cú pháp"
   }
 }

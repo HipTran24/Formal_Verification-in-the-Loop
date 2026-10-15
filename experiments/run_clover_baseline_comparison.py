@@ -51,9 +51,9 @@ def parse_args():
     )
     parser.add_argument(
         "--preset",
-        choices=["sample", "core", "clover", "humaneval", "all"],
+        choices=["sample", "core", "clover", "humaneval", "core30", "all"],
         default="sample",
-        help="Tập bài toán: sample (5 bài), core (16 bài), clover (6 bài), humaneval (10 bài), all (30 bài)"
+        help="Tập bài toán: sample (5 bài), core (16 bài), clover (6 bài), humaneval (10 bài), core30 (30 bài), all (35 bài)"
     )
     parser.add_argument(
         "--max-k",
@@ -77,6 +77,8 @@ def select_tasks(preset: str) -> List[str]:
 
     if preset == "all":
         return all_keys
+    elif preset == "core30":
+        return [k for k in all_keys if flat_registry[k].get("group", "") != "Inductive"]
     elif preset == "sample":
         # 5 bài tiêu biểu đa dạng hình thái
         sample_names = ["abs_val", "sum_to_n", "greatest_common_divisor", "is_palindrome", "sort_array"]

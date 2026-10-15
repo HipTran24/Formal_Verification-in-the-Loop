@@ -6,6 +6,28 @@ Tất cả các thay đổi đáng chú ý của dự án sẽ được ghi nh�
 
 ---
 
+## [1.6.11-academic-integrity-dehype] - 2026-10-15: Chuẩn Hóa Liêm Chính Học Thuật & Loại Bỏ Overclaim
+- **Báo cáo đối chuẩn 30 bài ([KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md))**:
+  + Thay thế tên gọi baseline thành **Cấu hình Baseline nội bộ (Lấy cảm hứng từ Clover)** (`Internal Baseline (Clover-inspired)`), giải thích rõ phương pháp tắt 4 trụ cột kỹ thuật nhằm mô phỏng quy trình prompt trực diện trên cùng hạ tầng cục bộ.
+  + Chuẩn hóa thuật ngữ khoa học: thay thế các tuyên bố overclaim ("100% đúng tuyệt đối", "hoàn toàn loại bỏ vi phạm") bằng mô tả chính xác ("Đã được Dafny & Z3 xác minh theo đặc tả", tỷ lệ vi phạm đặc tả quan sát trên tập 30 bài là 0/30).
+  + Định nghĩa tường minh các chỉ số: $Loops = 33/30 = 1.10$ lượt/bài, giải thích rõ per-verification timeout (15s) và tổng thời gian tính gộp cả độ trễ suy diễn LLM và thời gian thẩm định Z3.
+  + Mô tả chính xác ca `031-is-prime` là kết quả tự sửa qua vòng lặp dựa trên phản hồi lỗi `PostconditionViolation` từ Dafny.
+  + Cập nhật bảng mã LaTeX và kịch bản thuyết trình Slide 5 chuẩn mực, khiêm tốn khoa học.
+- **Làm sạch giao diện người dùng ([web_demo/tabs/tab_pipeline_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_pipeline_view.py), [web_demo/tabs/tab_cross_model_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_cross_model_view.py), [web_demo/tabs/tab_metrics_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_metrics_view.py), [web_demo/helpers.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/helpers.py))**:
+  + Bổ sung `import os` trong [helpers.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/helpers.py) để khắc phục lỗi phân tích tĩnh `Could not find name 'os'` tại hàm `load_latest_summary_metrics()`.
+  + Đổi nhãn `H0: Zero-Hallucination` thành `H0: Verified (Đạt đặc tả)` / `H0: Verified Code`.
+  + Thay đổi các thông báo "chứng minh đúng đắn 100%" thành "Mã nguồn đã được Dafny & Z3 Solver chứng minh theo đặc tả".
+  + Cập nhật bảng đối chuẩn ablation trong Tab 2 sang `Cấu hình Baseline nội bộ (Clover-inspired)*` kèm chú thích minh bạch.
+
+## [1.6.10-ui-state-persistence] - 2026-10-15: Lưu Trữ Trạng Thái UI Kiên Cố & Mặc Định Ẩn Các Lượt Chạy
+- **Mặc định ẩn gọn gàng ([web_demo/tabs/tab_pipeline_view.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/tabs/tab_pipeline_view.py))**: Đổi thuộc tính `expanded=False` cho toàn bộ các Expander Lượt 1, Lượt 2, Lượt 3 ở cả chế độ Đơn và Hàng loạt; giữ giao diện luôn tinh gọn, người dùng chỉ cần click để mở lượt muốn soi.
+- **Duy trì trạng thái khi F5 ([app.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/app.py), [web_demo/helpers.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/web_demo/helpers.py))**: Bổ sung cơ chế `load_ui_state()` và `save_ui_state()` lưu trữ vào `artifacts/results/ui_state.json`. Giờ đây khi tải lại trang web (F5/Reload), hệ thống tự động giữ y nguyên Chế độ thực thi (Hàng loạt), Bộ bài toán Preset (Bộ Cốt Lõi 30 bài), và Bài toán đang xem chi tiết (`031-is-prime`) mà không bị nhảy về mặc định ban đầu.
+
+
+
+
+
+
 ## [1.6.5-doc-ablation-report] - 2026-10-15: Tài Liệu Hóa Báo Cáo Thực Nghiệm Đối Chuẩn Ablation Study (30 Bài Toán)
 - **Tài liệu nghiên cứu ([KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md))**: Tổng hợp toàn diện kết quả thực nghiệm đối chuẩn hoàn tất lúc 14:34 ngày 15/10/2026 trên mô hình `Qwen2.5-Coder-7B` Local; ghi nhận chênh lệch vượt bậc (+76.7% Pass@3), bằng chứng bắt lỗi sửa đề $H_1$, phân tích cơ chế CEGAR, cung cấp mã LaTeX và kịch bản thuyết trình cho Slide 5 buổi báo cáo 18/10.
 

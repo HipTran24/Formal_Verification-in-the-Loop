@@ -6,6 +6,7 @@ và trích xuất dữ liệu khoa học từ các file kết quả thực nghi�
 
 import difflib
 import json
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -335,8 +336,9 @@ def save_last_batch_run(
     model_name: str,
     max_k: int,
     timeout_sec: int,
+    batch_history_dict: Optional[dict] = None,
 ) -> None:
-    """Lưu trữ kiên cố kết quả đợt chạy hàng loạt gần nhất vào artifacts/results/last_batch_run.json."""
+    """Lưu trữ kiên cố kết quả đợt chạy hàng loạt gần nhất vào artifacts/results/last_batch_run.json và last_batch_details.json."""
     results_dir = PROJECT_ROOT / "artifacts" / "results"
     results_dir.mkdir(parents=True, exist_ok=True)
     target_file = results_dir / "last_batch_run.json"
@@ -356,6 +358,41 @@ def save_last_batch_run(
     except Exception as e:
         print(f"Lỗi khi lưu last_batch_run.json: {e}")
 
+    # Lưu chi tiết lịch sử từng lượt (lượt 1, 2, 3) của từng bài vào last_batch_details.json
+    if batch_history_dict:
+        details_file = results_dir / "last_batch_details.json"
+        serialized_details = {}
+        for task_name, item in batch_history_dict.items():
+            res_obj = item.get("result")
+            history_list = []
+            if res_obj and hasattr(res_obj, "history"):
+                for entry in res_obj.history:
+                    history_list.append({
+                        "iteration": entry.iteration,
+                        "code": entry.code,
+                        "is_spec_valid": getattr(entry, "is_spec_valid", True),
+                        "is_verified": entry.is_verified,
+                        "error_taxonomy": entry.error_taxonomy,
+                        "error_message": entry.error_message,
+                        "cot_trace": getattr(entry, "cot_trace", ""),
+                        "cot_tokens": getattr(entry, "cot_tokens", 0),
+                        "counterexample_desc": getattr(entry, "counterexample_desc", ""),
+                        "has_cegar": getattr(entry, "has_cegar", False),
+                    })
+            serialized_details[task_name] = {
+                "spec": item.get("spec", ""),
+                "is_success": getattr(res_obj, "is_success", False),
+                "total_iterations": getattr(res_obj, "total_iterations", 0),
+                "final_code": getattr(res_obj, "final_code", ""),
+                "failure_reason": getattr(res_obj, "failure_reason", ""),
+                "history": history_list,
+            }
+        try:
+            with open(details_file, "w", encoding="utf-8") as f:
+                json.dump(serialized_details, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"Lỗi khi lưu last_batch_details.json: {e}")
+
 
 def load_last_batch_run() -> Optional[dict]:
     """Tải kết quả đợt chạy hàng loạt gần nhất từ artifacts/results/last_batch_run.json."""
@@ -369,14 +406,98 @@ def load_last_batch_run() -> Optional[dict]:
         return None
 
 
+def load_last_batch_details() -> dict:
+    """Tải chi tiết lịch sử từng lượt của các bài toán trong đợt chạy hàng loạt từ last_batch_details.json."""
+    from core.pipeline_controller import IterationLog, PipelineResult
+
+    target_file = PROJECT_ROOT / "artifacts" / "results" / "last_batch_details.json"
+    if not target_file.is_file():
+        return {}
+    try:
+        with open(target_file, "r", encoding="utf-8") as f:
+            raw_details = json.load(f)
+
+        restored = {}
+        for task_name, item in raw_details.items():
+            hist_logs = []
+            for h in item.get("history", []):
+                hist_logs.append(
+                    IterationLog(
+                        iteration=h.get("iteration", 1),
+                        code=h.get("code", ""),
+                        is_spec_valid=h.get("is_spec_valid", True),
+                        is_verified=h.get("is_verified", False),
+                        error_message=h.get("error_message", ""),
+                        error_taxonomy=h.get("error_taxonomy", ""),
+                        cot_trace=h.get("cot_trace", ""),
+                        cot_tokens=h.get("cot_tokens", 0),
+                        counterexample_desc=h.get("counterexample_desc", ""),
+                        has_cegar=h.get("has_cegar", False),
+                    )
+                )
+            p_res = PipelineResult(
+                task_name=task_name,
+                is_success=item.get("is_success", False),
+                total_iterations=item.get("total_iterations", 0),
+                final_code=item.get("final_code", ""),
+                history=hist_logs,
+                failure_reason=item.get("failure_reason", ""),
+            )
+            restored[task_name] = {
+                "result": p_res,
+                "spec": item.get("spec", ""),
+            }
+        return restored
+    except Exception as e:
+        print(f"Lỗi khi tải last_batch_details.json: {e}")
+        return {}
+
+
 def clear_last_batch_run() -> bool:
     """Xóa bỏ file lưu trữ lịch sử đợt chạy hàng loạt gần nhất."""
     target_file = PROJECT_ROOT / "artifacts" / "results" / "last_batch_run.json"
+    details_file = PROJECT_ROOT / "artifacts" / "results" / "last_batch_details.json"
+    cleared = False
     if target_file.is_file():
         try:
             target_file.unlink()
-            return True
+            cleared = True
         except Exception:
-            return False
-    return False
+            pass
+    if details_file.is_file():
+        try:
+            details_file.unlink()
+        except Exception:
+            pass
+    return cleared
+
+
+def load_ui_state() -> dict:
+    """Tải trạng thái giao diện gần nhất từ artifacts/results/ui_state.json."""
+    target_file = PROJECT_ROOT / "artifacts" / "results" / "ui_state.json"
+    if not target_file.is_file():
+        return {}
+    try:
+        with open(target_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def save_ui_state(updates: dict) -> None:
+    """Cập nhật và lưu trạng thái giao diện vào artifacts/results/ui_state.json."""
+    results_dir = PROJECT_ROOT / "artifacts" / "results"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    target_file = results_dir / "ui_state.json"
+
+    current = load_ui_state()
+    current.update(updates)
+    try:
+        with open(target_file, "w", encoding="utf-8") as f:
+            json.dump(current, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Lỗi khi lưu ui_state.json: {e}")
+
+
+
 

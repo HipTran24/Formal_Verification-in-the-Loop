@@ -418,14 +418,14 @@ def render_cross_model_tab(
                 # Đảm bảo hiển thị đầy đủ 5 tầng bản chất ảo giác H0 -> H4 chuẩn mực Nature 2024
                 ordered_codes = ["H0", "H1", "H2", "H3", "H4"]
                 code_labels = {
-                    "H0": "H0: Zero-Hallucination",
+                    "H0": "H0: Verified (Đạt đặc tả)",
                     "H1": "H1: Can Thiệp Đặc Tả",
                     "H2": "H2: Ngụy Biện Quy Nạp",
                     "H3": "H3: Vi Phạm Biên/Chỉ Số",
                     "H4": "H4: Trôi Dạt Ngữ Nghĩa",
                 }
                 color_map = {
-                    "H0: Zero-Hallucination": "#22c55e",
+                    "H0: Verified (Đạt đặc tả)": "#22c55e",
                     "H1: Can Thiệp Đặc Tả": "#ef4444",
                     "H2: Ngụy Biện Quy Nạp": "#f97316",
                     "H3: Vi Phạm Biên/Chỉ Số": "#eab308",
@@ -481,7 +481,7 @@ def render_cross_model_tab(
             st.markdown(
                 """
                 Dựa trên công trình phân loại toàn diện của **Nature (2024)** và đặc thù kiểm định toán học **Dafny + Z3 Solver**, hệ thống phân rã kết quả sinh mã thành 5 tầng bản chất:
-                * **✅ H0 (Zero-Hallucination)**: Mã nguồn được Z3 SMT Solver chứng minh toán học đúng đắn 100% trên toàn bộ không gian biến vô hạn.
+                * **✅ H0 (Verified Code)**: Mã nguồn được Z3 SMT Solver xác minh thành công và thỏa mãn toàn bộ tiền/hậu điều kiện của đặc tả.
                 * **⚠️ H1 (Spec-Tampering)**: Ảo giác can thiệp đặc tả — mô hình tự ý xóa bỏ hoặc nới lỏng tiền/hậu điều kiện (bị chặn bởi băm SHA-256).
                 * **🌀 H2 (Inductive Fallacy)**: Ảo giác ngụy biện quy nạp — bất biến vòng lặp (`invariant`) sai bước cơ sở hoặc không bảo toàn qua bước quy nạp.
                 * **⚡ H3 (Boundary Overflow)**: Ảo giác vi phạm biên — truy xuất chỉ số mảng vượt kích thước (`out of bounds`), chỉ số âm hoặc chia cho 0.

@@ -24,13 +24,16 @@ from core.token_tracker import get_gemini_token_usage, get_groq_token_usage
 from web_demo.helpers import (
     get_benchmark_tasks,
     get_flat_task_registry,
+    load_ui_state,
+    save_ui_state,
 )
+
 from web_demo.tabs import (
     render_cross_model_tab,
-    render_diff_tab,
     render_metrics_tab,
     render_pipeline_tab,
 )
+
 
 
 # ==============================================================================
@@ -120,31 +123,55 @@ st.markdown(
         transform: translateY(-2px) !important;
     }
 
-    /* Thẻ trạng thái kết quả */
+    /* Thẻ trạng thái kết quả thu gọn, không chiếm diện tích */
     .status-card-pass {
-        padding: 1.4rem;
+        padding: 0.8rem 1.2rem;
         background: radial-gradient(circle at 10% 20%, rgba(34, 197, 94, 0.15) 0%, transparent 70%),
                     linear-gradient(180deg, rgba(6, 78, 59, 0.4) 0%, rgba(6, 78, 59, 0.2) 100%);
         border: 1px solid rgba(74, 222, 128, 0.4);
-        border-radius: 12px;
+        border-radius: 10px;
         color: #86efac;
         font-weight: 700;
-        font-size: 1.15rem;
-        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
-        margin: 1.2rem 0;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 16px rgba(34, 197, 94, 0.15);
+        margin: 0.8rem 0;
     }
     .status-card-fail {
-        padding: 1.4rem;
+        padding: 0.8rem 1.2rem;
         background: radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.15) 0%, transparent 70%),
                     linear-gradient(180deg, rgba(127, 29, 29, 0.4) 0%, rgba(127, 29, 29, 0.2) 100%);
         border: 1px solid rgba(248, 113, 113, 0.4);
-        border-radius: 12px;
+        border-radius: 10px;
         color: #fca5a5;
         font-weight: 700;
-        font-size: 1.15rem;
-        box-shadow: 0 8px 24px rgba(239, 68, 68, 0.2);
-        margin: 1.2rem 0;
+        font-size: 0.95rem;
+        box-shadow: 0 4px 16px rgba(239, 68, 68, 0.15);
+        margin: 0.8rem 0;
     }
+
+    /* Thu nhỏ triệt để cỡ chữ của khối code Dafny (st.code) */
+    .stCodeBlock,
+    .stCodeBlock *,
+    div[data-testid="stCodeBlock"],
+    div[data-testid="stCodeBlock"] *,
+    div[data-testid="stCode"],
+    div[data-testid="stCode"] *,
+    pre code,
+    pre code * {
+        font-size: 0.74rem !important;
+        line-height: 1.35 !important;
+    }
+
+
+    /* Tinh chỉnh cột phản hồi Z3 & chẩn đoán: chữ nhỏ gọn, căn đều 2 bên */
+    .diag-box-text {
+        font-size: 0.79rem !important;
+        line-height: 1.5 !important;
+        text-align: justify !important;
+        text-justify: inter-word !important;
+        word-break: break-word !important;
+    }
+
 
     /* Tinh chỉnh Tab Headers */
     .stTabs [data-baseweb="tab-list"] {
@@ -469,13 +496,21 @@ with st.sidebar:
     # ==========================================================================
     with st.container(border=True):
         st.markdown("<div class='sidebar-section-title'>⚙️ Chế Độ Thực Thi</div>", unsafe_allow_html=True)
+        ui_state = load_ui_state()
+        saved_mode = ui_state.get("exec_mode", "Hàng loạt")
+        mode_options = ["Đơn", "Hàng loạt", "Tự do"]
+        mode_idx = mode_options.index(saved_mode) if saved_mode in mode_options else 1
+
         exec_mode = st.radio(
             "Chọn chế độ:",
-            ["Đơn", "Hàng loạt", "Tự do"],
-            index=0,
+            mode_options,
+            index=mode_idx,
             horizontal=True,
             label_visibility="collapsed",
+            key="ui_exec_mode_radio_sel",
         )
+        if exec_mode != saved_mode:
+            save_ui_state({"exec_mode": exec_mode})
 
     # ==========================================================================
     # MỤC 2: CHỌN BÀI TOÁN BENCHMARK (VIỀN MỎNG)
@@ -506,12 +541,6 @@ with st.sidebar:
             core30_total = clover_total + humaneval_total + advanced_total
             all_total = len(flat_registry)
 
-            # Mặc định ban đầu: KHÔNG chọn bài nào cả (False)
-            for _item_key, meta in flat_registry.items():
-                cb_key = f"chk_task_{meta['short_name']}"
-                if cb_key not in st.session_state:
-                    st.session_state[cb_key] = False
-
             preset_options = [
                 "--- Bấm để sổ xuống chọn bộ ---",
                 f"🎯 Bộ Cốt Lõi 30 bài ({core30_total} bài)",
@@ -524,13 +553,29 @@ with st.sidebar:
                 "🧹 Bỏ chọn toàn bộ (0 bài)",
             ]
 
+            saved_preset = ui_state.get("preset", f"🎯 Bộ Cốt Lõi 30 bài ({core30_total} bài)")
+            preset_idx = preset_options.index(saved_preset) if saved_preset in preset_options else 1
+
+            # Khởi tạo mặc định các bài tick chọn theo preset đã lưu nếu chưa có
+            if "current_preset_applied" not in st.session_state:
+                st.session_state["current_preset_applied"] = saved_preset
+                if "Bộ Cốt Lõi 30 bài" in saved_preset:
+                    for _item_key, meta in flat_registry.items():
+                        st.session_state[f"chk_task_{meta['short_name']}"] = (meta["group"] != "Inductive")
+                else:
+                    for _item_key, meta in flat_registry.items():
+                        st.session_state[f"chk_task_{meta['short_name']}"] = False
+
             preset_choice = st.selectbox(
                 "Sổ xuống chọn bộ bài toán:",
                 options=preset_options,
-                index=0,
+                index=preset_idx,
                 key="preset_selector_dropdown",
                 help="Số lượng bài toán được tính toán tự động dựa trên thư mục benchmark.",
             )
+            if preset_choice != saved_preset:
+                save_ui_state({"preset": preset_choice})
+
 
             if preset_choice != st.session_state.get("current_preset_applied", "--- Bấm để sổ xuống chọn bộ ---"):
                 st.session_state["current_preset_applied"] = preset_choice
@@ -692,18 +737,17 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Phân bố 4 Tab chức năng gọn gàng, súc tích
-tab_pipeline, tab_diff, tab_metrics, tab_cross_model = st.tabs(
+# Phân bố 3 Tab chức năng mạch lạc, chuyên sâu
+tab_pipeline, tab_metrics, tab_cross_model = st.tabs(
     [
         "⚡ Kiểm Định Trực Tiếp",
-        "🔍 So Sánh Mã",
         "📊 Báo Cáo NCKH",
         "⚔️ So Sánh Chéo",
     ]
 )
 
 # ==============================================================================
-# ĐIỀU PHỐI GIAO DIỆN 4 TABS CHUYÊN BIỆT
+# ĐIỀU PHỐI GIAO DIỆN 3 TABS CHUYÊN BIỆT
 # ==============================================================================
 with tab_pipeline:
     render_pipeline_tab(
@@ -717,9 +761,6 @@ with tab_pipeline:
         temperature=temperature,
         flat_registry=flat_registry,
     )
-
-with tab_diff:
-    render_diff_tab()
 
 with tab_metrics:
     render_metrics_tab(

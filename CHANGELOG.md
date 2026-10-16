@@ -6,6 +6,11 @@ Tất cả các thay đổi đáng chú ý của dự án sẽ được ghi nh�
 
 ---
 
+## [1.6.13-default-ui-zoom-80] - 2026-10-16: Thiết Lập Tỷ Lệ Thu Phóng Mặc Định 80% Toàn Giao Diện
+- **Khắc phục lỗi thanh cuộn & tối ưu trực quan ([app.py](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/app.py))**:
+  + Thay thế thuộc tính `zoom: 0.8` thô bạo (vốn làm cụt chiều cao viewport của trình duyệt) bằng cơ chế chuẩn: hạ `font-size` gốc trên thẻ `html` xuống `13px` (~80% của 16px mặc định) và duy trì `.stApp { min-height: 100vh; }`.
+  + Toàn bộ kích thước giao diện, khoảng cách và font chữ co gọn 80% thoáng đãng, thanh cuộn chạy trọn vẹn 100% màn hình không bị hở đáy hay đứt đoạn.
+
 ## [1.6.11-academic-integrity-dehype] - 2026-10-15: Chuẩn Hóa Liêm Chính Học Thuật & Loại Bỏ Overclaim
 - **Báo cáo đối chuẩn 30 bài ([KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md))**:
   + Thay thế tên gọi baseline thành **Cấu hình Baseline nội bộ (Lấy cảm hứng từ Clover)** (`Internal Baseline (Clover-inspired)`), giải thích rõ phương pháp tắt 4 trụ cột kỹ thuật nhằm mô phỏng quy trình prompt trực diện trên cùng hạ tầng cục bộ.

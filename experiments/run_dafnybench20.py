@@ -14,6 +14,7 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
+from core.batch_execution import iter_completed
 from core.dafny_engine import DafnyEngine
 from core.project_formal import audit_has_findings
 from core.spec_locker import SpecLocker
@@ -108,19 +109,34 @@ def main() -> int:
     parser.add_argument("--model", required=True)
     parser.add_argument("--task", help="One task ID; default is all 20")
     parser.add_argument("--max-attempts", type=int, default=3)
+    parser.add_argument("--workers", type=int, default=1,
+                        help="Independent cases in parallel (1-8; default 1)")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     load_dotenv(Path(__file__).resolve().parents[1] / ".env")
     if args.max_attempts < 1:
         parser.error("--max-attempts must be positive")
+    if not 1 <= args.workers <= 8:
+        parser.error("--workers must be between 1 and 8")
     suite = Path(__file__).resolve().parents[1] / "data" / "benchmarks" / "dafnybench20"
     index = json.loads((suite / "index.json").read_text(encoding="utf-8"))
     tasks = [entry for entry in index["tasks"] if not args.task or entry["id"] == args.task]
     if not tasks:
         parser.error(f"No such task: {args.task}")
-    results = [run_one(suite / entry["file"], entry["hint_sha256"], args.model, args.max_attempts) for entry in tasks]
+    completed = iter_completed(
+        tasks,
+        lambda entry: run_one(suite / entry["file"], entry["hint_sha256"], args.model, args.max_attempts),
+        workers=args.workers,
+    )
+    results_by_index = {}
+    for index, _, result in completed:
+        results_by_index[index] = result
+        print(f"[dafnybench {len(results_by_index)}/{len(tasks)}] "
+              f"{result['task_id']}: {result['status']}", flush=True)
+    results = [results_by_index[index] for index in sorted(results_by_index)]
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({"suite": "dafnybench20", "model": args.model,
+                                       "workers": args.workers,
                                        "results": results}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Completed {len(results)} tasks; verified and audited: {sum(x['status'] == 'passed' for x in results)}")
     return 0

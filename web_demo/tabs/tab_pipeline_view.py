@@ -17,6 +17,7 @@ import pandas as pd
 import streamlit as st
 
 from agents.llm_agent import LLMAgent
+from core.batch_execution import iter_completed
 from core.dafny_engine import DafnyEngine
 from core.pipeline_controller import PipelineController, PipelineResult
 from core.spec_locker import SpecLocker
@@ -359,6 +360,14 @@ def render_pipeline_tab(
                     target_badge = "[Core Target]" if item_info["is_target"] else "[Extended]"
                     st.markdown(f"**{idx_item}.** `{item_info['short_name']}` ({item_info['group']}) — {target_badge} — *{item_info['rel_path']}*")
 
+            batch_workers = st.slider(
+                "Số bài chạy song song",
+                min_value=1,
+                max_value=4,
+                value=1 if model_name.startswith("ollama/") else 2,
+                help="Mỗi bài dùng một agent và tiến trình Dafny riêng. Chọn 1 để chạy tuần tự; tăng dần nếu hạn mức API cho phép.",
+            )
+
             col_b_run, col_b_stop = st.columns([4, 2])
             with col_b_run:
                 batch_btn = st.button(
@@ -409,7 +418,7 @@ def render_pipeline_tab(
                                 f"""
                                 <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 8px 14px; margin-bottom: 8px;">
                                     <span style="font-weight: 700; color: #38bdf8;">{icon_svg('clock')} Lịch sử đợt chạy gần nhất:</span>
-                                    <span style="color: #e2e8f0;">Lưu lúc: {saved_batch.get('timestamp')} | Mô hình: <code>{saved_batch.get('model_name')}</code> | Thời gian: {saved_batch.get('total_batch_time')}s ({len(saved_batch.get('results_list', []))} bài)</span>
+                                    <span style="color: #e2e8f0;">Lưu lúc: {saved_batch.get('timestamp')} | Mô hình: <code>{saved_batch.get('model_name')}</code> | Song song: {saved_batch.get('workers', 1)} | Thời gian: {saved_batch.get('total_batch_time')}s ({len(saved_batch.get('results_list', []))} bài)</span>
                                 </div>
                                 """,
                                 unsafe_allow_html=True,
@@ -435,31 +444,42 @@ def render_pipeline_tab(
                 total_tasks = len(selected_batch)
 
                 try:
-                    agent = LLMAgent(model_name=model_name, temperature=temperature)
-                    engine = DafnyEngine(timeout_sec=timeout_sec)
-                    controller = PipelineController(agent=agent, engine=engine, max_k=max_k, verbose=False)
+                    serial_controller = None
+                    if batch_workers == 1:
+                        serial_controller = PipelineController(
+                            agent=LLMAgent(model_name=model_name, temperature=temperature),
+                            engine=DafnyEngine(timeout_sec=timeout_sec),
+                            max_k=max_k,
+                            verbose=False,
+                        )
+
+                    def run_case(item_key: str) -> tuple[str, PipelineResult, float]:
+                        task_info = flat_registry[item_key]
+                        spec = load_task_spec(task_info["rel_path"])
+                        controller = serial_controller or PipelineController(
+                            agent=LLMAgent(model_name=model_name, temperature=temperature),
+                            engine=DafnyEngine(timeout_sec=timeout_sec),
+                            max_k=max_k,
+                            verbose=False,
+                        )
+                        start = time.monotonic()
+                        result = controller.run_task(raw_spec=spec, task_name=task_info["short_name"])
+                        return spec, result, time.monotonic() - start
 
                     batch_start_time = time.time()
+                    results_by_index: dict[int, dict[str, Any]] = {}
+                    batch_status.info(f"Đang kiểm định {total_tasks} bài, tối đa {batch_workers} bài song song...")
 
-                    for idx, item_key in enumerate(selected_batch):
-                        if os.path.exists(batch_stop_flag):
-                            batch_status.warning(f"Đã dừng tiến trình kiểm định hàng loạt (hoàn thành {idx}/{total_tasks} bài).")
-                            try:
-                                os.remove(batch_stop_flag)
-                            except Exception:
-                                pass
-                            break
-
+                    for idx, item_key, completed in iter_completed(
+                        selected_batch,
+                        run_case,
+                        workers=batch_workers,
+                        stop_requested=lambda: os.path.exists(batch_stop_flag),
+                    ):
                         task_info = flat_registry[item_key]
                         task_name_item = task_info["short_name"]
                         task_group_item = task_info["group"]
-                        spec_item = load_task_spec(task_info["rel_path"])
-
-                        batch_status.info(f"**[{idx+1}/{total_tasks}] Đang kiểm định:** `{task_name_item}` ({task_group_item})...")
-
-                        t_item_start = time.time()
-                        res_item: PipelineResult = controller.run_task(raw_spec=spec_item, task_name=task_name_item)
-                        duration_item = time.time() - t_item_start
+                        spec_item, res_item, duration_item = completed
 
                         batch_history_dict[task_name_item] = {
                             "result": res_item,
@@ -470,7 +490,7 @@ def render_pipeline_tab(
                         status_label = "PASS" if res_item.is_success else "FAIL"
                         convergence_str = f"Pass@{res_item.total_iterations}" if res_item.is_success else f">{max_k}"
 
-                        results_list.append({
+                        results_by_index[idx] = {
                             "STT": idx + 1,
                             "Bài Toán": task_name_item,
                             "Tập Benchmark": task_group_item,
@@ -478,12 +498,18 @@ def render_pipeline_tab(
                             "Lượt Hội Tụ": convergence_str,
                             "Thời Gian (s)": round(duration_item, 2),
                             "Hình Thái": TopologyDetector.detect(spec_item).value,
-                        })
+                        }
+                        results_list = [results_by_index[i] for i in sorted(results_by_index)]
 
                         # Cập nhật thanh tiến trình và bảng kết quả trực tiếp
-                        batch_progress_bar.progress((idx + 1) / total_tasks)
+                        batch_progress_bar.progress(len(results_by_index) / total_tasks)
+                        batch_status.info(f"Đã hoàn thành {len(results_by_index)}/{total_tasks} bài; gần nhất: `{task_name_item}`.")
                         df_current = pd.DataFrame(results_list)
                         batch_table_placeholder.dataframe(df_current, width="stretch", hide_index=True)
+
+                    if os.path.exists(batch_stop_flag):
+                        batch_status.warning(f"Đã dừng an toàn sau {len(results_list)}/{total_tasks} bài.")
+                        Path(batch_stop_flag).unlink(missing_ok=True)
 
                     total_batch_time = time.time() - batch_start_time
                     st.session_state["last_batch_results"] = results_list
@@ -497,13 +523,15 @@ def render_pipeline_tab(
                         max_k=max_k,
                         timeout_sec=timeout_sec,
                         batch_history_dict=batch_history_dict,
+                        workers=batch_workers,
                     )
 
                     # Đếm số lượng pass
                     passed_count = sum(1 for r in results_list if "PASS" in r["Kết Quả Z3"])
-                    pass_rate = (passed_count / total_tasks) * 100
+                    completed_count = len(results_list)
+                    pass_rate = (passed_count / completed_count * 100) if completed_count else 0.0
 
-                    if passed_count == total_tasks:
+                    if completed_count == total_tasks and passed_count == total_tasks:
                         st.markdown(
                             f"""
                             <div class="status-card-pass">
@@ -517,7 +545,7 @@ def render_pipeline_tab(
                         st.markdown(
                             f"""
                             <div class="status-card-pass" style="border-color: rgba(56, 189, 248, 0.4);">
-                                {icon_svg('chart')} KẾT QUẢ THỰC NGHIỆM HÀNG LOẠT: Đạt {passed_count}/{total_tasks} bài ({pass_rate:.1f}%)
+                                {icon_svg('chart')} KẾT QUẢ THỰC NGHIỆM HÀNG LOẠT: Đạt {passed_count}/{completed_count} bài đã chạy ({pass_rate:.1f}%)
                                 <br><small>Tổng thời gian: {total_batch_time:.2f}s | Mô hình: {model_name}</small>
                             </div>
                             """,

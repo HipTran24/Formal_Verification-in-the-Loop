@@ -1,4 +1,4 @@
-"""Streamlit browser and single-case runner for the new research suites."""
+"""Streamlit browser for individual cases and complete new suites."""
 
 from __future__ import annotations
 
@@ -17,7 +17,21 @@ from web_demo.icons import icon_heading
 
 ROOT = Path(__file__).resolve().parents[2]
 RESULTS = ROOT / "artifacts" / "results" / "new_benchmarks"
+SUITE_RUNS = RESULTS / "suite_runs"
 SUITES = ("DafnyBench20", "Python pilot", "Spec traps")
+MODEL_LABELS = {
+    "gemini-2.5-flash": "Gemini 2.5 Flash · Google",
+    "gemini-3.5-flash": "Gemini 3.5 Flash · Google",
+    "gemini-3.6-flash": "Gemini 3.6 Flash · Google",
+    "groq/qwen/qwen3.8-27b": "Qwen 3.8 27B · Groq",
+    "groq/openai/gpt-oss-120b": "GPT-OSS 120B · Groq",
+    "groq/openai/gpt-oss-20b": "GPT-OSS 20B · Groq",
+    "deepseek/deepseek-flash": "DeepSeek Flash · API",
+    "ollama/qwen2.5-coder:7b": "Qwen 2.5 Coder 7B · Ollama",
+    "ollama/llama3.1:8b": "LLaMA 3.1 8B · Ollama",
+    "ollama/deepseek-r1:7b": "DeepSeek R1 7B · Ollama",
+}
+CUSTOM_MODEL = "__custom_model__"
 
 
 def _load_json(path: Path) -> dict:
@@ -181,8 +195,106 @@ def _docker_available() -> bool:
         return False
 
 
+def _latest_suite_run(suite: str) -> tuple[Path | None, dict]:
+    try:
+        pointer = _load_json(SUITE_RUNS / f"latest_{suite}.json")
+        folder = Path(pointer["run_dir"])
+        path = folder / "status.json"
+        status = _load_json(path) if path.is_file() else {
+            "state": "starting", "pid": pointer["pid"], "suite": suite,
+            "total_steps": 20 if suite == "dafnybench20" else 60,
+        }
+        return folder, status
+    except (OSError, ValueError, KeyError, json.JSONDecodeError):
+        return None, {}
+
+
+def _process_alive(pid: object) -> bool:
+    try:
+        os.kill(int(pid), 0)
+        return True
+    except (OSError, TypeError, ValueError):
+        return False
+
+
+def _launch_suite(suite: str, model: str, attempts: int, workers: int,
+                  grade: bool, dataset: str, task_repo: str) -> None:
+    folder = SUITE_RUNS / suite / datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    folder.mkdir(parents=True, exist_ok=False)
+    command = [sys.executable, "-m", "experiments.run_ui_suite", "--suite", suite,
+               "--model", model, "--max-attempts", str(attempts),
+               "--workers", str(workers), "--run-dir", str(folder)]
+    if grade:
+        command += ["--grade", "--swebench-dataset", dataset]
+        if task_repo:
+            command += ["--swebench-task-repo", task_repo]
+    with (folder / "run.log").open("w", encoding="utf-8") as log:
+        process = subprocess.Popen(command, cwd=ROOT, stdin=subprocess.DEVNULL,
+                                   stdout=log, stderr=subprocess.STDOUT,
+                                   start_new_session=True, env=os.environ.copy())
+    (SUITE_RUNS / f"latest_{suite}.json").write_text(json.dumps({
+        "run_dir": str(folder), "pid": process.pid,
+    }) + "\n", encoding="utf-8")
+
+
+def _render_suite_status(suite: str) -> None:
+    folder, status = _latest_suite_run(suite)
+    if not folder:
+        return
+    label = "DafnyBench20" if suite == "dafnybench20" else "30 issue Python"
+    with st.container(border=True):
+        st.markdown(f"**Lượt chạy {label} gần nhất**")
+        state = status.get("state", "starting")
+        done = (status.get("dafny_done", 0) if suite == "dafnybench20" else
+                status.get("baseline_done", 0) + status.get("framework_done", 0))
+        total = status.get("total_steps", 20 if suite == "dafnybench20" else 60)
+        st.progress(min(done, total) / total,
+                    text=f"{done}/{total} lượt" if suite == "python30" else f"{done}/{total} bài")
+        if suite == "python30":
+            st.caption(f"Baseline: {status.get('baseline_done', 0)}/30 · "
+                       f"Framework: {status.get('framework_done', 0)}/30")
+        if status.get("stage"):
+            st.caption(status["stage"])
+        if state == "completed":
+            st.success("Đã hoàn tất và lưu báo cáo.")
+            if suite == "dafnybench20":
+                st.metric("Verify và audit đạt", status.get("verified_and_audited", 0))
+                result = Path(status.get("result_file", ""))
+                if result.is_file():
+                    with st.expander("Xem kết quả 20 bài"):
+                        _show_report(_load_json(result), "DafnyBench20")
+            else:
+                st.write("Trạng thái kiểm tra Python:", status.get("python_statuses", {}))
+                if not status.get("grade"):
+                    st.warning("Đã tạo bản vá cho 30 issue, chưa chấm bài kiểm tra ẩn bằng Docker/SWE-bench.")
+                reports = Path(status.get("result_dir", "")) / "framework"
+                files = sorted(reports.glob("*.json")) if reports.is_dir() else []
+                if files:
+                    with st.expander("Xem kết quả từng issue"):
+                        chosen = st.selectbox("Issue Python", files, format_func=lambda p: p.stem,
+                                              key="suite_python_report")
+                        _show_report(_load_json(chosen), "Python pilot")
+            summary = folder / "summary.json"
+            if summary.is_file():
+                st.download_button("Tải tổng kết JSON", summary.read_bytes(),
+                                   file_name=f"{suite}_{folder.name}.json", mime="application/json",
+                                   key=f"download_suite_{suite}")
+        elif state == "failed" or not _process_alive(status.get("pid")):
+            st.error(status.get("error") or "Tiến trình đã dừng; mở nhật ký để xem lỗi.")
+        else:
+            st.info("Đang chạy nền; tiến độ tự cập nhật khoảng 5 giây một lần.")
+        st.caption(f"Kết quả lưu tại: {folder}")
+        log = folder / "run.log"
+        if log.is_file():
+            with st.expander("Nhật ký chạy"):
+                st.code(log.read_text(encoding="utf-8", errors="replace")[-8000:], language="text")
+
+
+_show_suite_status = st.fragment(run_every="5s")(_render_suite_status) if hasattr(st, "fragment") else _render_suite_status
+
+
 def render_new_benchmarks_tab() -> None:
-    """Browse pinned cases, run one case, and inspect separated evidence."""
+    """Browse pinned cases and run a case or a full suite."""
     load_dotenv(ROOT / ".env")
     st.markdown(icon_heading("Bộ thử nghiệm mới", "flask"), unsafe_allow_html=True)
     st.caption("Khám phá từng case và chạy trực tiếp. 35 bài Dafny cũ vẫn ở các tab trước.")
@@ -197,6 +309,7 @@ def render_new_benchmarks_tab() -> None:
     case_id = ""
     grade = False
     mode = ""
+    task_repo = ""
 
     if suite == "DafnyBench20":
         entries = _load_json(ROOT / "data/benchmarks/dafnybench20/index.json")["tasks"]
@@ -256,17 +369,54 @@ def render_new_benchmarks_tab() -> None:
         command += ["-m", "experiments.run_spec_traps", "--case", case_id]
 
     if suite != "Spec traps":
-        model = st.text_input("Mô hình LiteLLM", value=os.getenv("FVIL_BENCHMARK_MODEL", ""),
-                              placeholder="Ví dụ: openai/tên-mô-hình", key="new_benchmark_model",
-                              help="Dùng tên mô hình và API key tương ứng trong .env; không bắt buộc Ollama.")
+        configured_model = os.getenv("FVIL_BENCHMARK_MODEL", "").strip()
+        model_options = ("", *MODEL_LABELS, CUSTOM_MODEL)
+        default_choice = (configured_model if configured_model in MODEL_LABELS else
+                          CUSTOM_MODEL if configured_model else "")
+        selected_model = st.selectbox(
+            "Mô hình LiteLLM", model_options, index=model_options.index(default_choice),
+            format_func=lambda name: ("Chọn mô hình" if not name else
+                                      "Mô hình khác…" if name == CUSTOM_MODEL else
+                                      f"{MODEL_LABELS[name]} ({name})"),
+            key="new_benchmark_model_choice",
+            help="Chọn mô hình có trong ứng dụng hoặc nhập tên LiteLLM khác. API key hoặc Ollama tương ứng phải được cấu hình trước.",
+        )
+        model = (st.text_input("Tên mô hình LiteLLM khác", value=configured_model if default_choice == CUSTOM_MODEL else "",
+                               placeholder="provider/model", key="new_benchmark_model_custom").strip()
+                 if selected_model == CUSTOM_MODEL else selected_model)
         attempts = st.number_input("Số lượt sửa tối đa", min_value=1, max_value=5, value=3,
                                    key="new_benchmark_attempts")
         command += ["--model", model.strip(), "--max-attempts", str(attempts)]
         st.caption("Chạy mô hình có thể phát sinh chi phí API. Mỗi lần bấm tạo một báo cáo mới.")
 
-    run_one = st.button("Chạy case đã chọn", icon=":material/play_arrow:", type="primary", key="new_benchmark_run")
-    run_all_traps = (st.button("Chạy cả 10 ca", icon=":material/play_arrow:", key="new_traps_all")
-                     if suite == "Spec traps" else False)
+    batch_suite = {"DafnyBench20": "dafnybench20", "Python pilot": "python30"}.get(suite)
+    run_all_suite = False
+    if batch_suite:
+        with st.expander("Tùy chọn chạy cả tập"):
+            batch_workers = st.number_input("Số bài chạy song song", min_value=1,
+                                            max_value=4, value=1, key=f"batch_workers_{batch_suite}")
+        active = any(
+            status.get("state") in {"starting", "running"} and _process_alive(status.get("pid"))
+            for _, status in (_latest_suite_run("dafnybench20"), _latest_suite_run("python30"))
+        )
+        col_one, col_all = st.columns(2)
+        with col_one:
+            run_one = st.button("Chạy case đã chọn", icon=":material/play_arrow:",
+                                width="stretch", key="new_benchmark_run")
+        with col_all:
+            label = ("Chạy cả 20 bài DafnyBench" if batch_suite == "dafnybench20"
+                     else "Chạy cả 30 issue Python")
+            run_all_suite = st.button(label, icon=":material/play_arrow:", type="primary",
+                                      width="stretch", disabled=active, key=f"run_all_{batch_suite}")
+        run_all_traps = False
+    else:
+        col_one, col_all = st.columns(2)
+        with col_one:
+            run_one = st.button("Chạy case đã chọn", icon=":material/play_arrow:",
+                                width="stretch", key="new_benchmark_run")
+        with col_all:
+            run_all_traps = st.button("Chạy cả 10 ca", icon=":material/play_arrow:",
+                                      width="stretch", key="new_traps_all")
     if run_one or run_all_traps:
         if suite != "Spec traps" and not model.strip():
             st.warning("Hãy nhập tên mô hình LiteLLM trước khi chạy.")
@@ -284,6 +434,23 @@ def render_new_benchmarks_tab() -> None:
             if output.is_file():
                 st.session_state[f"saved_{prefix}"] = output
 
-    st.markdown("#### Kết quả")
+    if run_all_suite:
+        if not model.strip():
+            st.warning("Hãy nhập tên mô hình LiteLLM trước khi chạy cả tập.")
+        elif grade and not _docker_available():
+            st.error("Muốn chấm Python cần cài CLI `swebench` và khởi động Docker trước.")
+        elif grade and sys.platform == "darwin" and os.uname().machine == "arm64" and not task_repo.strip():
+            st.error("Mac ARM cần thư mục swe-bench-tasks để chấm Docker.")
+        else:
+            try:
+                _launch_suite(batch_suite, model.strip(), int(attempts), int(batch_workers),
+                              grade, dataset if suite == "Python pilot" else "verified", task_repo.strip())
+                st.rerun()
+            except OSError as exc:
+                st.error(f"Không khởi động được cả tập: {exc}")
+
+    if batch_suite:
+        _show_suite_status(batch_suite)
+    st.markdown("#### Kết quả đã lưu")
     _saved_reports(prefix, suite)
     st.caption("Chi tiết quy trình và giới hạn chứng minh: docs/REAL_WORLD_BENCHMARKS.md")

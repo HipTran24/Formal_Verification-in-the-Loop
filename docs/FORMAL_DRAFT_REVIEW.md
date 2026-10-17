@@ -1,5 +1,7 @@
 # Mười thuộc tính Dafny đề xuất để rà soát
 
+**Mốc v1.7.0, 18/10/2026:** người dùng sẽ rà soát ý nghĩa nghiệp vụ của các bản nháp này; chưa có thuộc tính nào được ghi nhận là đã duyệt. Xem [hướng dẫn pilot](REAL_WORLD_BENCHMARKS.md) để hiểu cách tách kết quả Dafny và Python.
+
 **Trạng thái: bản nháp, chưa được duyệt.** Mã ở [`draft_properties.dfy`](../data/benchmarks/python_projects/formal_drafts/draft_properties.dfy) là các *vị từ trên dữ liệu trừu tượng*. Lệnh `dafny verify` chỉ kiểm tra tệp Dafny hợp lệ; vì không có hiện thực Python hoặc cầu nối ngữ nghĩa, kết quả đó **không chứng minh bản vá Python đúng**. Mười manifest giữ `formal_review_status: "draft_pending_human_review"` và `formal_files: []`; tỷ lệ chứng minh Dafny của pilot Python không tính các mục này.
 
 | Issue | Điều cần xác nhận trong bản nháp | Khoảng trống mô hình cần xử lý trước khi duyệt |

@@ -32,6 +32,7 @@ from web_demo.helpers import (
 
 from web_demo.tabs import (
     render_cross_model_tab,
+    render_diff_tab,
     render_metrics_tab,
     render_new_benchmarks_tab,
     render_pipeline_tab,
@@ -665,6 +666,7 @@ with st.sidebar:
     # ==========================================================================
     with st.container(border=True):
         st.markdown(f"<div class='sidebar-section-title'>{icon_svg('cpu')} Cấu hình mô hình</div>", unsafe_allow_html=True)
+        gemini_key = os.getenv("GEMINI_API_KEY", "")
         model_name = st.selectbox(
             "Mô hình LLM",
             [
@@ -675,11 +677,12 @@ with st.sidebar:
                 "gemini-2.5-flash",
                 "gemini-3.5-flash",
                 "gemini-3.6-flash",
+                "deepseek/deepseek-flash",
                 "ollama/llama3.1:8b",
                 "ollama/deepseek-r1:7b",
             ],
-            index=0,
-            help="Hỗ trợ mô hình Local (Ollama) và Cloud (Google Gemini, Groq LPU qua key trong .env).",
+            index=4 if gemini_key and not gemini_key.startswith("your_") else 0,
+            help="Hỗ trợ Ollama và các API Gemini, Groq, DeepSeek qua key trong .env. deepseek/deepseek-flash dùng DeepSeek API; ollama/deepseek-r1:7b chạy cục bộ.",
         )
         col_cfg1, col_cfg2 = st.columns(2)
         with col_cfg1:
@@ -764,10 +767,11 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Giữ nguyên ba tab hiện có và bổ sung bộ thử nghiệm mới
-tab_pipeline, tab_metrics, tab_cross_model, tab_new_benchmarks = st.tabs(
+# Các công cụ kiểm định, so sánh mã và bộ thử nghiệm mới
+tab_pipeline, tab_diff, tab_metrics, tab_cross_model, tab_new_benchmarks = st.tabs(
     [
         "Kiểm định trực tiếp",
+        "So sánh mã",
         "Báo cáo NCKH",
         "So sánh chéo",
         "Bộ thử nghiệm mới",
@@ -790,6 +794,9 @@ with tab_pipeline:
         flat_registry=flat_registry,
     )
 
+with tab_diff:
+    render_diff_tab()
+
 with tab_metrics:
     render_metrics_tab(
         model_name=model_name,
@@ -809,4 +816,4 @@ with tab_cross_model:
 with tab_new_benchmarks:
     render_new_benchmarks_tab()
 
-# Formal Verification-in-the-Loop Web Demo v1.4.2 - Modular UI Architecture Ready
+# Formal Verification-in-the-Loop Web Demo - documentation milestone v1.7.0

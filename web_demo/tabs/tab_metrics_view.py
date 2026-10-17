@@ -179,6 +179,7 @@ def render_metrics_tab(
                 ("groq/openai/gpt-oss-20b", "GPT-OSS 20B (Groq LPU)"),
                 ("gemini-2.5-flash", "Gemini 2.5 Flash (Cloud)"),
                 ("gemini-3.5-flash", "Gemini 3.5 Flash (Cloud)"),
+                ("deepseek/deepseek-flash", "DeepSeek Flash (API)"),
                 ("ollama/llama3.1:8b", "LLaMA 3.1 8B (Local)"),
                 ("ollama/deepseek-r1:7b", "DeepSeek R1 7B (Local)"),
             ]

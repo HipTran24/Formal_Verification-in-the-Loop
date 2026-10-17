@@ -31,7 +31,7 @@ def render_cross_model_tab(
 ) -> None:
     """Hiển thị toàn bộ nội dung của Tab 4: So sánh đối đầu đa mô hình."""
     st.markdown(icon_heading("So sánh đối đầu mô hình", "compare"), unsafe_allow_html=True)
-    st.caption("Đo lường năng lực sinh mã kèm kiểm chứng hình thức giữa Local AI (Ollama) và Cloud AI (Google Gemini).")
+    st.caption("Đo lường năng lực sinh mã kèm kiểm chứng hình thức giữa mô hình cục bộ và mô hình qua API.")
 
     # Lựa chọn mô hình tham gia thi đấu (Hỗ trợ Local, Gemini và Groq LPU)
     eval_models = [
@@ -42,6 +42,7 @@ def render_cross_model_tab(
         ("gemini-2.5-flash", "Gemini 2.5 Flash (Cloud - Quota cao 1500 req/ngày)"),
         ("gemini-3.5-flash", "Gemini 3.5 Flash (Cloud - Đã kiểm chứng)"),
         ("gemini-3.6-flash", "Gemini 3.6 Flash (Preview - Hạn ngạch 20 req/ngày)"),
+        ("deepseek/deepseek-flash", "DeepSeek Flash (API)"),
         ("ollama/llama3.1:8b", "LLaMA 8B (Local)"),
         ("ollama/deepseek-r1:7b", "DeepSeek 7B (Local)"),
     ]

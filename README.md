@@ -220,10 +220,12 @@ streamlit run app.py
 
 ---
 
-## 6. Kết Quả Thực Nghiệm Mới Nhất (Empirical Evaluation)
+## 6. Kết Quả Thực Nghiệm Trên Bài Toán Dafny (Empirical Evaluation)
 
-### 6.1. Chinh phục tuyệt đối 30/30 bài toán Benchmark (Qwen2.5-Coder-7B)
-Hệ thống kết hợp Actor-Critic và Z3 SMT Solver đã đưa mô hình chuyên biệt mã nguồn **`ollama/qwen2.5-coder:7b`** đạt mốc **tuyệt đối 30/30 bài toán (100.0%)**:
+> Các bảng dưới đây ghi lại những lần chạy lịch sử trên bài toán Dafny độc lập. Báo cáo đối chứng ngày 15/10/2026 ghi **29/30 Pass@3**, khác với bảng 30/30 bên dưới; cần nêu rõ cấu hình và dữ liệu thô của từng lần chạy trước khi so sánh. Chưa có kết quả chấm 30 tác vụ Python bằng Docker. Hướng dẫn tập thử mới: [Đánh giá agent coding trên dự án Python](docs/REAL_WORLD_BENCHMARKS.md).
+
+### 6.1. Kết quả 30/30 được ghi trong báo cáo README trước đây (Qwen2.5-Coder-7B)
+Bảng lịch sử dưới đây ghi lần chạy được báo cáo đạt 30/30. Chưa dùng bảng này để kết luận hiệu năng trên dự án Python hoặc thay thế báo cáo đối chứng 29/30 ngày 15/10/2026:
 
 | Tập Benchmark | Quy mô | Pass@1 (Zero-shot) | Pass@3 (Formal-in-the-Loop) | Tỷ lệ Tự Sửa Lỗi (RSR) | Kết Quả Z3 |
 | :--- | :---: | :---: | :---: | :---: | :---: |

@@ -6,6 +6,13 @@ Tất cả các thay đổi đáng chú ý của dự án sẽ được ghi nh�
 
 ---
 
+## [unreleased-real-world-pilot] - 2026-10-17: Thí điểm agent coding trên dự án Python
+
+- Thêm 20 bài DafnyBench phục hồi gợi ý chứng minh, 30 issue SWE-bench Verified từ Django/Xarray/Sphinx, và 10 ca kiểm tra tính toàn vẹn/độ yếu của đặc tả; giữ 35 bài Dafny cũ để hồi quy.
+- Thêm runner bản vá nhiều tệp trên commit ghim, chọn context có giới hạn và lưu bằng chứng, CLI/API gọi mô hình qua LiteLLM, cùng xuất dataset chấm 30 bài ở revision cố định cho SWE-bench Docker.
+- Báo cáo tách kết quả kiểm thử Python, xác minh Dafny và audit; ba ca đặc tả yếu có phản ví dụ chạy được. Mười bản nháp đặc tả cho issue Python đang chờ người dùng rà soát, chưa được tính điểm hình thức.
+- Xem [hướng dẫn thí điểm](docs/REAL_WORLD_BENCHMARKS.md) và [bảng rà soát đặc tả](docs/FORMAL_DRAFT_REVIEW.md). Chưa chạy chấm Docker hoặc mô hình trên toàn bộ 30 issue trong lần cập nhật này.
+
 ## [1.6.11-academic-integrity-dehype] - 2026-10-15: Chuẩn Hóa Liêm Chính Học Thuật & Loại Bỏ Overclaim
 - **Báo cáo đối chuẩn 30 bài ([KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md](file:///c:/Users/aaa/Pictures/SaveCode/Formal_Verification-in-the-Loop/KET_QUA_THUC_NGHIEM_DOI_CHUNG_30_BAI.md))**:
   + Thay thế tên gọi baseline thành **Cấu hình Baseline nội bộ (Lấy cảm hứng từ Clover)** (`Internal Baseline (Clover-inspired)`), giải thích rõ phương pháp tắt 4 trụ cột kỹ thuật nhằm mô phỏng quy trình prompt trực diện trên cùng hạ tầng cục bộ.

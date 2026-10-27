@@ -1,5 +1,5 @@
 {
-  "batch_task": "abs_val",
+  "batch_task": "031-is-prime",
   "preset": "🎯 Bộ Cốt Lõi 30 bài (30 bài)",
   "exec_mode": "Hàng loạt"
 }

@@ -58,6 +58,17 @@ st.markdown(
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
     <style>
+    /* Điều chỉnh font-size gốc về 13px (~80% của 16px chuẩn) để toàn bộ giao diện co gọn mà không bị hỏng thanh cuộn */
+    html {
+        font-size: 13px !important;
+    }
+    
+    /* Thu nhỏ tỷ lệ các container mà vẫn giữ đủ chiều cao 100% viewport */
+    .stApp {
+        width: 100% !important;
+        min-height: 100vh !important;
+    }
+
     /* Toàn cục Font & Theme */
     html, body, [class*="css"] {
         font-family: 'Plus Jakarta Sans', sans-serif;

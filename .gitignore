@@ -33,3 +33,7 @@ artifacts/private/
 # Thư mục chứa binaries công cụ bên thứ ba
 tools/
 
+# Tài liệu cá nhân, kịch bản thuyết trình và báo cáo PDF nội bộ
+*.pdf
+kịch bản thuyết trình.pdf
+
